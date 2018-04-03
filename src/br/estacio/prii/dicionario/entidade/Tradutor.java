@@ -14,7 +14,7 @@ public class Tradutor
     //Métodos da Classe: Dicionario
     public String traduzirParaIngles(String palavra)
     {
-        Palavra p = this.dicionario.pesquisar(palavra);
+        Palavra p = dicionario.pesquisar(palavra);
         
         if(p != null) {
             return p.getIngles();
@@ -25,7 +25,7 @@ public class Tradutor
     
     public String traduzirParaPortugues(String palavra)
     {
-        Palavra p = this.dicionario.pesquisar(palavra);
+        Palavra p = dicionario.pesquisar(palavra);
         
         if(p != null) {
             return p.getPortugues();

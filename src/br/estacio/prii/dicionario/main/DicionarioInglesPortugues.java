@@ -9,12 +9,12 @@ public class DicionarioInglesPortugues
     {  
         Dicionario d = new Dicionario();
         d.adicionar("homem", "man");
-        d.adicionar("homem", "man");
+        d.adicionar("mulher", "woman");
         
-        //Tradutor t = new Tradutor(d);
-        
-        //System.out.println(t.traduzirParaPortugues("woman"));
-        d.getPalavras();
+        Tradutor t = new Tradutor(d);
+        // d.remover("mulher");
+        System.out.println(t.traduzirParaPortugues("woman"));
+        //d.getPalavras();
         
     }
 }

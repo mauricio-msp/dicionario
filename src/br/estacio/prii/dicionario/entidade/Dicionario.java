@@ -10,23 +10,28 @@ public class Dicionario
     //Construtor    
     public Dicionario() 
     {
-        this.palavras = new ArrayList<>();
+        palavras = new ArrayList<>();
     }
     
     //Métodos da Classe: Dicionario
     public void adicionar(String portugues, String ingles)
     {
-        this.palavras.add(new Palavra(portugues, ingles));
+        palavras.add(new Palavra(portugues, ingles));
     }
     
-    public void remover(Palavra palavra)
+    public void remover(String palavra)
     {
-        this.palavras.remove(palavra);
+        for(int i = 0; i < palavras.size(); i++) {
+            if(palavras.get(i).getIngles().equals(palavra) || palavras.get(i).getPortugues().equals(palavra)) {
+                palavras.remove(i);
+                i--;
+            }
+        }
     }
     
     public Palavra pesquisar(String palavra)
     {
-        for(Palavra p : this.palavras) {
+        for(Palavra p : palavras) {
             if(p.getIngles().equals(palavra) || p.getPortugues().equals(palavra)) {
                 return p;
             }
@@ -37,9 +42,9 @@ public class Dicionario
     
     public void getPalavras() 
     {
-        this.palavras.forEach((p) -> {
+        palavras.forEach((p) -> {
             System.out.println(p.getIngles() + " - " + p.getPortugues());
-        });       
+        });
     }
     
 }

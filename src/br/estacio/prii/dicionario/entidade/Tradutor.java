@@ -5,7 +5,7 @@ public class Tradutor
 {
     private final Dicionario dicionario;
 
-    //Contrutor
+    //Construtor
     public Tradutor(Dicionario dicionario) 
     {
         this.dicionario = dicionario;

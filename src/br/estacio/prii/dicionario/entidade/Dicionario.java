@@ -17,6 +17,8 @@ public class Dicionario
     public void adicionar(String portugues, String ingles)
     {
         palavras.add(new Palavra(portugues, ingles));
+        
+        removerDuplicados();
     }
     
     public void remover(String palavra)
@@ -47,4 +49,17 @@ public class Dicionario
         });
     }
     
+    private void removerDuplicados() 
+    {
+        for (int i = 0; i < palavras.size(); i++) {
+            Palavra a = palavras.get(i);
+            for (int j = i + 1; j < palavras.size(); j++) {
+                Palavra b = palavras.get(j);
+                if (a.getIngles().equals(b.getIngles()) || a.getPortugues().equals(b.getPortugues())) {
+                    palavras.remove(j);
+                    j--;
+                }
+            }
+        }
+    }
 }

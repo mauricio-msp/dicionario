@@ -13,6 +13,8 @@ import br.estacio.prii.dicionario.entidade.Palavra;
 
 public class ArquivoDicionario 
 {
+    
+    //Métodos da Classe: ArquivoDicionario
     public void gravar(ArrayList<Palavra> palavras)
     {
         try{

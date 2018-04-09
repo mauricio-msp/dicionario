@@ -13,6 +13,11 @@ public class Dicionario
         palavras = new ArrayList<>();
     }
     
+    public Dicionario(ArrayList<Palavra> palavras) 
+    {
+        this.palavras = palavras;
+    }
+    
     //Métodos da Classe: Dicionario
     public void adicionar(String portugues, String ingles)
     {
@@ -42,11 +47,9 @@ public class Dicionario
         return null;
     }
     
-    public void getPalavras() 
+    public ArrayList<Palavra> getPalavras() 
     {
-        palavras.forEach((p) -> {
-            System.out.println(p.getIngles() + " - " + p.getPortugues());
-        });
+        return palavras;
     }
     
     private void removerDuplicados() 

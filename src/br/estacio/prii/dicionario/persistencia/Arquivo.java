@@ -11,10 +11,10 @@ import java.io.BufferedWriter;
 import java.util.ArrayList;
 import br.estacio.prii.dicionario.entidade.Palavra;
 
-public class ArquivoDicionario 
+public class Arquivo 
 {
     
-    //Métodos da Classe: ArquivoDicionario
+    //Métodos da Classe: Arquivo
     public void gravar(ArrayList<Palavra> palavras)
     {
         try{
@@ -31,7 +31,7 @@ public class ArquivoDicionario
                 }
             }
             
-        }catch(IOException e){
+        }catch(IOException ioe){
             //
         }
     }
@@ -52,7 +52,7 @@ public class ArquivoDicionario
                 }
             }
             
-        }catch(IOException e){
+        }catch(IOException ioe){
             //
         }
         

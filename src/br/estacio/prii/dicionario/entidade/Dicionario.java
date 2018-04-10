@@ -7,7 +7,7 @@ public class Dicionario
 {
     private final ArrayList<Palavra> palavras;
 
-    //Construtor    
+    //Construtores    
     public Dicionario() 
     {
         palavras = new ArrayList<>();
@@ -18,18 +18,17 @@ public class Dicionario
         this.palavras = palavras;
     }
     
-    //Métodos da Classe: Dicionario
+    //Métodos da Classe: Dicionário
     public void adicionar(String portugues, String ingles)
     {
         palavras.add(new Palavra(portugues, ingles));
-        
         removerDuplicados();
     }
     
     public void remover(String palavra)
     {
         for(int i = 0; i < palavras.size(); i++) {
-            if(palavras.get(i).getIngles().equals(palavra) || palavras.get(i).getPortugues().equals(palavra)) {
+            if((palavras.get(i).getIngles() + " - " + palavras.get(i).getPortugues()).equals(palavra)) {
                 palavras.remove(i);
                 i--;
             }
@@ -52,6 +51,7 @@ public class Dicionario
         return palavras;
     }
     
+    // Método Privado da Classe: Dicionário
     private void removerDuplicados() 
     {
         for (int i = 0; i < palavras.size(); i++) {

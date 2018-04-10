@@ -9,8 +9,10 @@ import br.estacio.prii.dicionario.entidade.*;
 import java.util.ArrayList;
 
 public class FrameDicionario extends JFrame
-{    
-    private final String[] opcoes = { "Cadastrar", "Traduzir" };
+{   
+    private final Dicionario dicionario        = new Dicionario();
+    private ArrayList<Palavra> palavras        = null;
+    private final String[] opcoes              = {"Cadastrar", "Traduzir"};
     
     private final JMenuBar menuBar             = new JMenuBar();
     private final JMenu menuArquivo            = new JMenu("Arquivo");
@@ -26,7 +28,8 @@ public class FrameDicionario extends JFrame
     private final JLabel lblOperacao           = new JLabel("Operação: ");
     private final JLabel lblPalavra            = new JLabel("Palavra: ");
     private final JLabel lblTraducao           = new JLabel("Tradução: ");
-    private final JLabel lblRodape             = new JLabel("Total de Palavras: ");
+    private final JLabel lblTradzirPara        = new JLabel("Traduzir para: ");
+    private final JLabel lblRodape             = new JLabel("Total de Palavras: 0");
     private final JComboBox cbbOperacao        = new JComboBox(opcoes);
     private final JTextField txtPalavra        = new JTextField(10);
     private final JTextField txtTraducao       = new JTextField(10);
@@ -37,18 +40,20 @@ public class FrameDicionario extends JFrame
     private final JList listPalavras           = new JList(modelLista);
     private final JScrollPane spnLista         = new JScrollPane();
     private final JPanel pnlCadastro           = new JPanel();
+    private final JPanel pnlTraducao           = new JPanel();
     private final JPanel pnlLista              = new JPanel();
     private final JPanel pnlPrincipal          = new JPanel();
     private final JPanel pnlCentral            = new JPanel();
     private final JPanel pnlBotoes             = new JPanel();
     private final JButton btnCadastrar         = new JButton("Cadastrar");
     private final JButton btnExcluir           = new JButton("Excluir");
-    private final JButton btnTraduzir          = new JButton();
+    private final JButton btnTraduzir          = new JButton("Traduzir");
     private final JSeparator separadorTitulo   = new JSeparator();
     private final JSeparator separadorRodape   = new JSeparator();
+    private final JSeparator separadorBotao    = new JSeparator();
 	       
-    public FrameDicionario (Dicionario dicionario)
-    {
+    public FrameDicionario ()
+    {   
         setSize(610, 535);
         setTitle("Estácio 2018: Dicionário Inglês - Português");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -56,7 +61,6 @@ public class FrameDicionario extends JFrame
         setResizable(false);
         
         initComponents();
-        initDatas(dicionario);
         initEvents();
         
         setVisible(true);
@@ -69,10 +73,16 @@ public class FrameDicionario extends JFrame
         lblRodape.setFont(new Font("Comic Sans", Font.BOLD, 16));
         lblTitulo.setForeground(new Color(30,144,255));
         
+        // Campos :Propriedades
+        txtPalavra.setToolTipText("Informe a palavra no idioma INGLÊS.");
+        txtTraducao.setToolTipText("Informe a tradução no idioma PORTUGUÊS.");
+        
         // Paineis :Layouts
         pnlCentral.setLayout(new GridLayout(1, 2, 20, 0));
         pnlCadastro.setLayout(new GridLayout(8, 1, 0, 10));
         pnlCadastro.setBorder(BorderFactory.createCompoundBorder(new TitledBorder("Cadastro"), new EmptyBorder(10, 10, 10, 10)));
+        pnlTraducao.setLayout(new GridLayout(8, 1, 0, 10));
+        pnlTraducao.setBorder(BorderFactory.createCompoundBorder(new TitledBorder("Traduzir"), new EmptyBorder(10, 10, 10, 10)));
         pnlBotoes.setLayout(new GridLayout(1, 2, 20, 0));
         pnlLista.setLayout(new BorderLayout(0, 10));
         pnlLista.setBorder(BorderFactory.createCompoundBorder(new TitledBorder("Dicionário"), new EmptyBorder(10, 10, 10, 10)));
@@ -84,17 +94,18 @@ public class FrameDicionario extends JFrame
         separadorRodape.setPreferredSize(new Dimension(610, 5));
 	separadorRodape.setForeground(new Color(184, 207, 229));
 	separadorRodape.setBackground(new Color(184, 207, 229));
+        separadorBotao.setPreferredSize(new Dimension(100, 5));
         
         // Lista, Scroll(Rolagem) e Botão de Exclusão :Propriedades
         listPalavras.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        listPalavras.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+        listPalavras.setLayoutOrientation(JList.VERTICAL);
         listPalavras.setVisibleRowCount(-1);
         listPalavras.setModel(modelLista);
         spnLista.setPreferredSize(new Dimension(250, 300));
         spnLista.setViewportView(listPalavras);
         btnExcluir.setPreferredSize(new Dimension(200, 34));
         
-        // Menu, Itens
+        // Menu, Itens :Adicionados
         setJMenuBar(menuBar);
         menuBar.add(menuArquivo);
         menuBar.add(menuDicionario);
@@ -105,33 +116,43 @@ public class FrameDicionario extends JFrame
         menuDicionario.add(menuCarregar);
         menuOperacao.add(menuCadastrar);
         menuOperacao.add(menuTraduzir);
-        
-        // Painel de Listagem
+
+        // Painel de Listagem :Adicionados
         pnlLista.add(spnLista, "Center");
         pnlLista.add(btnExcluir, "South");
         pnlLista.repaint();
         
-        // painel Cadastro
+        //Painel Tradução :Adicionados
+        pnlTraducao.add(lblOperacao);
+        pnlTraducao.add(cbbOperacao);
+        pnlTraducao.add(lblPalavra);
+        pnlTraducao.add(txtPalavra);
+        pnlTraducao.add(lblTradzirPara);
+        pnlTraducao.add(pnlBotoes);
+        pnlTraducao.add(btnTraduzir);
+        pnlTraducao.add(lblTraducao);
+        
+        // Painel Cadastro :Adicionados
         pnlCadastro.add(lblOperacao);
         pnlCadastro.add(cbbOperacao);
         pnlCadastro.add(lblPalavra);
         pnlCadastro.add(txtPalavra);
-        pnlCadastro.add(pnlBotoes);
         pnlCadastro.add(lblTraducao);
         pnlCadastro.add(txtTraducao);
+        pnlCadastro.add(new JLabel());
         pnlCadastro.add(btnCadastrar);
         
-        // Painel Central
+        // Painel Central :Adicionados
         pnlCentral.add(pnlLista);
         pnlCentral.add(pnlCadastro);
         
-        // Painel de Botões de tradução
+        // Painel de Botões de tradução :Adicionados
         btnGroup.add(rbIngles);
         btnGroup.add(rbPortugues);
         pnlBotoes.add(rbIngles);
         pnlBotoes.add(rbPortugues);
         
-        // Painel Principal
+        // Painel Principal :Adicionados
         pnlPrincipal.add(lblTitulo, "North");
         pnlPrincipal.add(separadorTitulo);
         pnlPrincipal.add(pnlCentral, "Center");
@@ -143,6 +164,7 @@ public class FrameDicionario extends JFrame
     
     private void initEvents()
     {
+        // Eventos do Menu
         menuSair.addActionListener((ActionEvent ae) -> {
             
             String[] options = {"Sim", "Não"};
@@ -158,18 +180,62 @@ public class FrameDicionario extends JFrame
             if (resposta == JOptionPane.YES_OPTION) {
                 System.exit(0);
             }
-        });       
-    }
-    
-    private void initDatas(Dicionario dicionario)
-    {
-        ArrayList<Palavra> palavras = dicionario.getPalavras();
+        });   
         
-        palavras.forEach((p) -> {
-            modelLista.addElement(p.getIngles() + " - " + p.getPortugues());
+        // Eventos dos Botões
+        btnCadastrar.addActionListener((ActionEvent ae) -> {
+            if(txtPalavra.getText().isEmpty() || txtTraducao.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(
+                    this, "Por favor, preencha todos os campos.", "CAMPOS VAZIOS", JOptionPane.WARNING_MESSAGE
+                );
+            } else {
+                dicionario.adicionar(txtTraducao.getText(), txtPalavra.getText());
+                
+                palavras = dicionario.getPalavras();
+        
+                palavras.forEach((Palavra p) -> {
+                    modelLista.addElement(p.getIngles() + " - " + p.getPortugues());
+
+                    for(int i = 0; i < modelLista.getSize(); i++) {
+                        for(int j = i + 1; j < modelLista.getSize(); j++) {
+                            if(modelLista.getElementAt(i).equals(modelLista.getElementAt(j)) ) {
+                                modelLista.removeElementAt(j);
+                                j--;
+                            }
+                        }
+                    }
+                });
+                
+                txtPalavra.setText("");
+                txtTraducao.setText(""); 
+                
+                // Label Funcional
+                lblRodape.setText("Total de Palavras: " + Integer.toString(palavras.size()));
+            }
         });
         
-        // Label Funcional
-        lblRodape.setText(lblRodape.getText().concat(String.valueOf(palavras.size())));
+        btnExcluir.addActionListener((ActionEvent ae) -> {
+            if(listPalavras.getModel().getSize() == 0) {
+                JOptionPane.showMessageDialog(
+                    this, "Não existe nenhum item cadastrado.", "LISTA VAZIA", JOptionPane.WARNING_MESSAGE
+                );  
+            } else {
+                if(listPalavras.getSelectedValue() == null) {
+                    JOptionPane.showMessageDialog(
+                        this, "Nenhum item foi selecionado.", "ITEM NÃO SELECIONADO", JOptionPane.WARNING_MESSAGE
+                    );
+                } else {
+                    String item = String.valueOf(listPalavras.getSelectedValue());
+            
+                    dicionario.remover(item);
+                    modelLista.removeElement(item);
+
+                    // Label Funcional
+                    lblRodape.setText("Total de Palavras: " + Integer.toString(palavras.size()));
+                }
+               
+            }
+        });
+
     }
 }

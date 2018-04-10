@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.border.*;
 import br.estacio.prii.dicionario.entidade.*;
+import br.estacio.prii.dicionario.persistencia.Arquivo;
 import java.util.ArrayList;
 
 public class FrameDicionario extends JFrame
@@ -194,6 +195,10 @@ public class FrameDicionario extends JFrame
             if (resposta == JOptionPane.YES_OPTION) {
                 System.exit(0);
             }
+        });   
+        
+        menuSalvar.addActionListener((ActionEvent ae) -> {
+            new Arquivo().gravar(palavras);
         });   
         
         // Eventos dos Botões

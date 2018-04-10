@@ -51,10 +51,11 @@ public class FrameDicionario extends JFrame
     private final JSeparator separadorTitulo   = new JSeparator();
     private final JSeparator separadorRodape   = new JSeparator();
     private final JSeparator separadorBotao    = new JSeparator();
-	       
+         
     public FrameDicionario ()
     {   
         setSize(610, 535);
+        setIconImage(new ImageIcon(getClass().getResource("/icones/translate.png")).getImage());
         setTitle("Estácio 2018: Dicionário Inglês - Português");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -68,6 +69,14 @@ public class FrameDicionario extends JFrame
     
     private void initComponents()
     {
+        // Itens Menus :Icones
+        menuSobre.setIcon(new ImageIcon(getClass().getResource("/icones/information.png")));
+        menuSair.setIcon(new ImageIcon(getClass().getResource("/icones/door_out.png")));
+        menuSalvar.setIcon(new ImageIcon(getClass().getResource("/icones/save.png")));
+        menuCarregar.setIcon(new ImageIcon(getClass().getResource("/icones/open.png")));
+        menuCadastrar.setIcon(new ImageIcon(getClass().getResource("/icones/add.png")));
+        menuTraduzir.setIcon(new ImageIcon(getClass().getResource("/icones/refresh.png")));
+        
         // Labels :Propriedades
         lblTitulo.setFont(new Font("Comic Sans", Font.BOLD, 25));
         lblRodape.setFont(new Font("Comic Sans", Font.BOLD, 16));
@@ -76,6 +85,11 @@ public class FrameDicionario extends JFrame
         // Campos :Propriedades
         txtPalavra.setToolTipText("Informe a palavra no idioma INGLÊS.");
         txtTraducao.setToolTipText("Informe a tradução no idioma PORTUGUÊS.");
+        
+        // Botões :Icones
+        btnCadastrar.setIcon(new ImageIcon(getClass().getResource("/icones/add.png")));
+        btnExcluir.setIcon(new ImageIcon(getClass().getResource("/icones/delete.png")));
+        
         
         // Paineis :Layouts
         pnlCentral.setLayout(new GridLayout(1, 2, 20, 0));
@@ -238,4 +252,6 @@ public class FrameDicionario extends JFrame
         });
 
     }
+
+    
 }

@@ -37,9 +37,9 @@ public class FrameDicionario extends JFrame
     private final JLabel lblRodape             = new JLabel("Total de Palavras: 0");
     private final JComboBox cbxOperacaoC       = new JComboBox(opcoes);
     private final JComboBox cbxOperacaoT       = new JComboBox(opcoes);
-    private final JTextField txtPalavraC       = new JTextField(22);
-    private final JTextField txtPalavraT       = new JTextField(22);
-    private final JTextField txtTraducaoC      = new JTextField(22);
+    private final JTextField txtPalavraC       = new JTextField(25);
+    private final JTextField txtPalavraT       = new JTextField(25);
+    private final JTextField txtTraducaoC      = new JTextField(25);
     private final JRadioButton rbInglesT       = new JRadioButton("Inglês");
     private final JRadioButton rbPortuguesT    = new JRadioButton("Português");
     private final ButtonGroup btnGroup         = new ButtonGroup();
@@ -61,7 +61,7 @@ public class FrameDicionario extends JFrame
          
     public FrameDicionario ()
     {   
-        setSize(610, 535);
+        setSize(650, 555);
         setIconImage(new ImageIcon(getClass().getResource("/icones/translate.png")).getImage());
         setTitle("Estácio 2018: Dicionário Inglês - Português");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -94,6 +94,7 @@ public class FrameDicionario extends JFrame
         
         // Paineis :Layouts
         pnlCentral.setLayout(new BorderLayout(10, 0));
+        pnlCentral.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         pnlCadastro.setLayout(new GridLayout(8, 1, 0, 10));
         pnlCadastro.setBorder(BorderFactory.createCompoundBorder(new TitledBorder("Cadastro"), new EmptyBorder(10, 10, 10, 10)));
         pnlTraducao.setLayout(new GridLayout(8, 1, 0, 10));
@@ -104,10 +105,10 @@ public class FrameDicionario extends JFrame
         pnlLista.setBorder(BorderFactory.createCompoundBorder(new TitledBorder("Dicionário"), new EmptyBorder(10, 10, 10, 10)));
         
         // Separadores :Propriedades
-        separadorTitulo.setPreferredSize(new Dimension(610, 5));
+        separadorTitulo.setPreferredSize(new Dimension(630, 5));
 	separadorTitulo.setForeground(new Color(184, 207, 229));
 	separadorTitulo.setBackground(new Color(184, 207, 229));
-        separadorRodape.setPreferredSize(new Dimension(610, 5));
+        separadorRodape.setPreferredSize(new Dimension(630, 5));
 	separadorRodape.setForeground(new Color(184, 207, 229));
 	separadorRodape.setBackground(new Color(184, 207, 229));
         
@@ -116,11 +117,13 @@ public class FrameDicionario extends JFrame
         listPalavras.setLayoutOrientation(JList.VERTICAL);
         listPalavras.setVisibleRowCount(-1);
         listPalavras.setModel(modelLista);
-        spnLista.setPreferredSize(new Dimension(250, 300));
+        spnLista.setPreferredSize(new Dimension(270, 300));
         spnLista.setViewportView(listPalavras);
         btnExcluir.setPreferredSize(new Dimension(200, 34));
         
         // Labels :Propriedades
+        lblTraducaoT.setFont(new Font("Comic Sans", Font.BOLD, 15));
+        lblTraduzidoT.setFont(new Font("Comic Sans", Font.BOLD, 15));
         lblTraduzidoT.setForeground(new Color(30, 144, 255));
         lblTitulo.setFont(new Font("Comic Sans", Font.BOLD, 25));
         lblRodape.setFont(new Font("Comic Sans", Font.BOLD, 16));

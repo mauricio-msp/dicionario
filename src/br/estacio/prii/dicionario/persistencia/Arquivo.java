@@ -21,11 +21,18 @@ public class Arquivo
             try (BufferedWriter arquivo = new BufferedWriter(new FileWriter(new File("dicionario.txt")))) {
                 StringBuilder str = new StringBuilder();
                 
-                for(Palavra p : palavras){
+                if(palavras != null){
+                    for(Palavra p : palavras){
+                        str.setLength(0);
+                        str.append(p.getIngles());
+                        str.append(" - ");
+                        str.append(p.getPortugues());
+                        arquivo.write(str.toString());
+                        arquivo.newLine();
+                    }
+                } else {
                     str.setLength(0);
-                    str.append(p.getIngles());
-                    str.append(" - ");
-                    str.append(p.getPortugues());
+                    str.append(" ");
                     arquivo.write(str.toString());
                     arquivo.newLine();
                 }

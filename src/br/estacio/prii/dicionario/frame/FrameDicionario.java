@@ -41,8 +41,8 @@ public class FrameDicionario extends JFrame
     private final JTextField txtPalavraC       = new JTextField(25);
     private final JTextField txtPalavraT       = new JTextField(25);
     private final JTextField txtTraducaoC      = new JTextField(25);
-    private final JRadioButton rbInglesT       = new JRadioButton("Inglês");
-    private final JRadioButton rbPortuguesT    = new JRadioButton("Português");
+    private final JRadioButton rbInglesT       = new JRadioButton("Inglês", false);
+    private final JRadioButton rbPortuguesT    = new JRadioButton("Português", true);
     private final ButtonGroup btnGroup         = new ButtonGroup();
     private final DefaultListModel modelLista  = new DefaultListModel();
     private final JList listPalavras           = new JList(modelLista);
@@ -65,7 +65,7 @@ public class FrameDicionario extends JFrame
         setSize(650, 555);
         setIconImage(new ImageIcon(getClass().getResource("/icones/translate.png")).getImage());
         setTitle("Estácio 2018: Dicionário Inglês - Português");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
         
@@ -279,6 +279,7 @@ public class FrameDicionario extends JFrame
             pnlCadastro.setVisible(true);
             pnlTraducao.setVisible(false);
             
+            txtPalavraC.requestFocus();
             cbxOperacaoC.setSelectedIndex(0);
         });
         
@@ -286,6 +287,7 @@ public class FrameDicionario extends JFrame
             pnlCadastro.setVisible(false);
             pnlTraducao.setVisible(true);
             
+            txtPalavraT.requestFocus();
             cbxOperacaoT.setSelectedIndex(1);
         });
         
@@ -295,10 +297,14 @@ public class FrameDicionario extends JFrame
                 case 0:
                     pnlTraducao.setVisible(false);
                     pnlCadastro.setVisible(true);
+                    
+                    txtPalavraC.requestFocus();
                     break;
                 case 1:
                     pnlTraducao.setVisible(true);
                     pnlCadastro.setVisible(false);
+                    
+                    txtPalavraT.requestFocus();
                     break;
             } 
             
@@ -310,10 +316,14 @@ public class FrameDicionario extends JFrame
                 case 0:
                     pnlTraducao.setVisible(false);
                     pnlCadastro.setVisible(true);
+                    
+                    txtPalavraC.requestFocus();
                     break;
                 case 1:
                     pnlTraducao.setVisible(true);
                     pnlCadastro.setVisible(false);
+                    
+                    txtPalavraT.requestFocus();
                     break;
             } 
             
@@ -350,6 +360,8 @@ public class FrameDicionario extends JFrame
                 // Label Funcional
                 lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
             }
+            
+            txtPalavraC.requestFocus();
         });
         
         btnExcluir.addActionListener((ActionEvent ae) -> {
@@ -393,21 +405,17 @@ public class FrameDicionario extends JFrame
                 );
             } else {
                 String radio = rbInglesT.isSelected() ? rbInglesT.getText() : rbPortuguesT.getText();
-                
-                if(!(rbInglesT.isSelected() || rbPortuguesT.isSelected())) {
-                    JOptionPane.showMessageDialog(
-                        this, "Por favor, marque uma das opções (Inglês ou Português).", "CAMPO DESMARCADO", JOptionPane.WARNING_MESSAGE
-                    );
+              
+                if(radio.equals("Inglês")) {
+                    lblTraduzidoT.setText(new Tradutor(dicionario).traduzirParaIngles(txtPalavraT.getText()));
                 } else {
-                    if(radio.equals("Inglês")) {
-                        lblTraduzidoT.setText(new Tradutor(dicionario).traduzirParaIngles(txtPalavraT.getText()));
-                    } else {
-                        lblTraduzidoT.setText(new Tradutor(dicionario).traduzirParaPortugues(txtPalavraT.getText()));
-                    }
+                    lblTraduzidoT.setText(new Tradutor(dicionario).traduzirParaPortugues(txtPalavraT.getText()));
                 }
             }
+            
+            txtPalavraT.requestFocus();
         });
+        
     }
 
-    
 }

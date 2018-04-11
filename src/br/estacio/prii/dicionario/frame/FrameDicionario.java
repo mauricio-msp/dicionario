@@ -241,6 +241,10 @@ public class FrameDicionario extends JFrame
         menuSalvar.addActionListener((ActionEvent ae) -> {
             if(!modelLista.isEmpty()) {
                 new Arquivo().gravar(palavras);
+                
+                JOptionPane.showMessageDialog(
+                    this, "Dicionário salvo com sucesso!", "DICIONÁRIO SALVO", JOptionPane.QUESTION_MESSAGE
+                );
             } else {
                 JOptionPane.showMessageDialog(
                     this, "Não existem palavras na lista.", "LISTA VAZIA", JOptionPane.WARNING_MESSAGE

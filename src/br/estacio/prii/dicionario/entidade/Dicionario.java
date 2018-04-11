@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Dicionario
 {
-    private final ArrayList<Palavra> palavras;
+    private ArrayList<Palavra> palavras;
 
     //Construtores    
     public Dicionario() 
@@ -44,6 +44,12 @@ public class Dicionario
         }
         
         return null;
+    }
+    
+    // Métodos Acessore e Modificadores
+    public void setPalavras(ArrayList<Palavra> palavras)
+    {
+        this.palavras = palavras;
     }
     
     public ArrayList<Palavra> getPalavras() 

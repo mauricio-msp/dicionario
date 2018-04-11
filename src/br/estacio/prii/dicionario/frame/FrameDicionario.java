@@ -90,7 +90,7 @@ public class FrameDicionario extends JFrame
         // Botões :Icones
         btnCadastrar.setIcon(new ImageIcon(getClass().getResource("/icones/add.png")));
         btnExcluir.setIcon(new ImageIcon(getClass().getResource("/icones/delete.png")));
-        
+        btnTraduzir.setIcon(new ImageIcon(getClass().getResource("/icones/refresh.png")));
         
         // Paineis :Layouts
         pnlCentral.setLayout(new GridLayout(1, 2, 20, 0));
@@ -201,6 +201,21 @@ public class FrameDicionario extends JFrame
             new Arquivo().gravar(palavras);
         });   
         
+        menuCarregar.addActionListener((ActionEvent ae) -> {
+            modelLista.clear();
+            
+            palavras = new Arquivo().ler();
+            
+            palavras.forEach((Palavra p) -> {
+                modelLista.addElement(p.getIngles() + " - " + p.getPortugues());
+            });
+            
+            dicionario.setPalavras(palavras);
+            
+            // Label Funcional
+            lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
+        });   
+        
         // Eventos dos Botões
         btnCadastrar.addActionListener((ActionEvent ae) -> {
             if(txtPalavra.getText().isEmpty() || txtTraducao.getText().isEmpty()) {
@@ -229,7 +244,7 @@ public class FrameDicionario extends JFrame
                 txtTraducao.setText(""); 
                 
                 // Label Funcional
-                lblRodape.setText("Total de Palavras: " + Integer.toString(palavras.size()));
+                lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
             }
         });
         
@@ -244,15 +259,26 @@ public class FrameDicionario extends JFrame
                         this, "Nenhum item foi selecionado.", "ITEM NÃO SELECIONADO", JOptionPane.WARNING_MESSAGE
                     );
                 } else {
-                    String item = String.valueOf(listPalavras.getSelectedValue());
-            
-                    dicionario.remover(item);
-                    modelLista.removeElement(item);
+                    String[] options = {"Sim", "Não"};
+                    int resposta =  JOptionPane.showOptionDialog(
+                                        null,
+                                        "Você deseja realmente excluir essa palavra? ",
+                                        "Confirmação de Exclusão",
+                                        JOptionPane.DEFAULT_OPTION,
+                                        JOptionPane.WARNING_MESSAGE,
+                                        null, options, options[0]
+                                    );
 
-                    // Label Funcional
-                    lblRodape.setText("Total de Palavras: " + Integer.toString(palavras.size()));
-                }
-               
+                    if (resposta == JOptionPane.YES_OPTION) {
+                        String item = String.valueOf(listPalavras.getSelectedValue());
+
+                        dicionario.remover(item);
+                        modelLista.removeElement(item);
+
+                        // Label Funcional
+                        lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
+                    }   
+                }               
             }
         });
 

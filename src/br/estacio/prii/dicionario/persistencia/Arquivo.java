@@ -23,12 +23,14 @@ public class Arquivo
                 
                 for(Palavra p : palavras){
                     str.setLength(0);
-                    str.append(p.getPortugues());
-                    str.append(" - ");
                     str.append(p.getIngles());
+                    str.append(" - ");
+                    str.append(p.getPortugues());
                     arquivo.write(str.toString());
                     arquivo.newLine();
                 }
+                
+                arquivo.close();
             }
             
         }catch(IOException ioe){
@@ -47,9 +49,11 @@ public class Arquivo
                 
                 while(str != null){
                     palavra = str.split(" - ");
-                    palavras.add(new Palavra(palavra[0], palavra[1]));
+                    palavras.add(new Palavra(palavra[1], palavra[0]));
                     str = arquivo.readLine();
                 }
+                
+                arquivo.close();
             }
             
         }catch(IOException ioe){

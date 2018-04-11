@@ -72,6 +72,14 @@ public class FrameDicionario extends JFrame
     
     private void initComponents()
     {
+        // Eventos de Atalho
+        menuSobre.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.ALT_MASK));
+        menuSair.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_MASK));
+        menuSalvar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_MASK));
+        menuCarregar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.ALT_MASK));
+        menuCadastrar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_MASK));
+        menuTraduzir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.ALT_MASK));
+               
         // Itens Menus :Icones
         menuSobre.setIcon(new ImageIcon(getClass().getResource("/icones/information.png")));
         menuSair.setIcon(new ImageIcon(getClass().getResource("/icones/door_out.png")));
@@ -202,7 +210,13 @@ public class FrameDicionario extends JFrame
         });   
         
         menuSalvar.addActionListener((ActionEvent ae) -> {
-            new Arquivo().gravar(palavras);
+            if(!modelLista.isEmpty()) {
+                new Arquivo().gravar(palavras);
+            } else {
+                JOptionPane.showMessageDialog(
+                    this, "Não existem palavras na lista.", "LISTA VAZIA", JOptionPane.WARNING_MESSAGE
+                );
+            }
         });   
         
         menuCarregar.addActionListener((ActionEvent ae) -> {

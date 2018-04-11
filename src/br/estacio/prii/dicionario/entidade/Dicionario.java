@@ -28,7 +28,7 @@ public class Dicionario
     public void remover(String palavra)
     {
         for(int i = 0; i < palavras.size(); i++) {
-            if((palavras.get(i).getIngles() + " - " + palavras.get(i).getPortugues()).equals(palavra)) {
+            if((palavras.get(i).getIngles() + " - " + palavras.get(i).getPortugues()).equalsIgnoreCase(palavra)) {
                 palavras.remove(i);
                 i--;
             }
@@ -38,7 +38,7 @@ public class Dicionario
     public Palavra pesquisar(String palavra)
     {
         for(Palavra p : palavras) {
-            if(p.getIngles().equals(palavra) || p.getPortugues().equals(palavra)) {
+            if(p.getIngles().equalsIgnoreCase(palavra) || p.getPortugues().equalsIgnoreCase(palavra)) {
                 return p;
             }
         }
@@ -64,7 +64,7 @@ public class Dicionario
             Palavra a = palavras.get(i);
             for (int j = i + 1; j < palavras.size(); j++) {
                 Palavra b = palavras.get(j);
-                if (a.getIngles().equals(b.getIngles()) || a.getPortugues().equals(b.getPortugues())) {
+                if (a.getIngles().equalsIgnoreCase(b.getIngles()) || a.getPortugues().equalsIgnoreCase(b.getPortugues())) {
                     palavras.remove(j);
                     j--;
                 }

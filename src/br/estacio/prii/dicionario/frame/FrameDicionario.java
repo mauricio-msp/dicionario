@@ -30,6 +30,7 @@ public class FrameDicionario extends JFrame
     private final JLabel lblPalavra            = new JLabel("Palavra: ");
     private final JLabel lblTraducao           = new JLabel("Tradução: ");
     private final JLabel lblTradzirPara        = new JLabel("Traduzir para: ");
+    private final JLabel lblTraduzido          = new JLabel("");
     private final JLabel lblRodape             = new JLabel("Total de Palavras: 0");
     private final JComboBox cbbOperacao        = new JComboBox(opcoes);
     private final JTextField txtPalavra        = new JTextField(10);
@@ -42,6 +43,7 @@ public class FrameDicionario extends JFrame
     private final JScrollPane spnLista         = new JScrollPane();
     private final JPanel pnlCadastro           = new JPanel();
     private final JPanel pnlTraducao           = new JPanel();
+    private final JPanel pnlTraduzido          = new JPanel();
     private final JPanel pnlLista              = new JPanel();
     private final JPanel pnlPrincipal          = new JPanel();
     private final JPanel pnlCentral            = new JPanel();
@@ -79,13 +81,10 @@ public class FrameDicionario extends JFrame
         menuTraduzir.setIcon(new ImageIcon(getClass().getResource("/icones/refresh.png")));
         
         // Labels :Propriedades
+        lblTraduzido.setForeground(new Color(30, 144, 255));
         lblTitulo.setFont(new Font("Comic Sans", Font.BOLD, 25));
         lblRodape.setFont(new Font("Comic Sans", Font.BOLD, 16));
-        lblTitulo.setForeground(new Color(30,144,255));
-        
-        // Campos :Propriedades
-        txtPalavra.setToolTipText("Informe a palavra no idioma INGLÊS.");
-        txtTraducao.setToolTipText("Informe a tradução no idioma PORTUGUÊS.");
+        lblTitulo.setForeground(new Color(30, 144, 255));
         
         // Botões :Icones
         btnCadastrar.setIcon(new ImageIcon(getClass().getResource("/icones/add.png")));
@@ -99,6 +98,7 @@ public class FrameDicionario extends JFrame
         pnlTraducao.setLayout(new GridLayout(8, 1, 0, 10));
         pnlTraducao.setBorder(BorderFactory.createCompoundBorder(new TitledBorder("Traduzir"), new EmptyBorder(10, 10, 10, 10)));
         pnlBotoes.setLayout(new GridLayout(1, 2, 20, 0));
+        pnlTraduzido.setLayout(new FlowLayout(FlowLayout.LEFT));
         pnlLista.setLayout(new BorderLayout(0, 10));
         pnlLista.setBorder(BorderFactory.createCompoundBorder(new TitledBorder("Dicionário"), new EmptyBorder(10, 10, 10, 10)));
         
@@ -137,7 +137,11 @@ public class FrameDicionario extends JFrame
         pnlLista.add(btnExcluir, "South");
         pnlLista.repaint();
         
-        //Painel Tradução :Adicionados
+        // Painel Traduzido (Resultado)
+        pnlTraduzido.add(lblTraducao);
+        pnlTraduzido.add(lblTraduzido);
+         
+        // Painel Tradução :Adicionados
         pnlTraducao.add(lblOperacao);
         pnlTraducao.add(cbbOperacao);
         pnlTraducao.add(lblPalavra);
@@ -145,21 +149,21 @@ public class FrameDicionario extends JFrame
         pnlTraducao.add(lblTradzirPara);
         pnlTraducao.add(pnlBotoes);
         pnlTraducao.add(btnTraduzir);
-        pnlTraducao.add(lblTraducao);
+        pnlTraducao.add(pnlTraduzido);
         
         // Painel Cadastro :Adicionados
-        pnlCadastro.add(lblOperacao);
-        pnlCadastro.add(cbbOperacao);
-        pnlCadastro.add(lblPalavra);
-        pnlCadastro.add(txtPalavra);
-        pnlCadastro.add(lblTraducao);
-        pnlCadastro.add(txtTraducao);
-        pnlCadastro.add(new JLabel());
-        pnlCadastro.add(btnCadastrar);
+//        pnlCadastro.add(lblOperacao);
+//        pnlCadastro.add(cbbOperacao);
+//        pnlCadastro.add(lblPalavra);
+//        pnlCadastro.add(txtPalavra);
+//        pnlCadastro.add(lblTraducao);
+//        pnlCadastro.add(txtTraducao);
+//        pnlCadastro.add(new JLabel());
+//        pnlCadastro.add(btnCadastrar);
         
         // Painel Central :Adicionados
         pnlCentral.add(pnlLista);
-        pnlCentral.add(pnlCadastro);
+        pnlCentral.add(pnlTraducao);
         
         // Painel de Botões de tradução :Adicionados
         btnGroup.add(rbIngles);
@@ -282,6 +286,27 @@ public class FrameDicionario extends JFrame
             }
         });
 
+        btnTraduzir.addActionListener((ActionEvent ae) -> {
+            if(txtPalavra.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(
+                    this, "Por favor, preencha o campo PALAVRA.", "CAMPO VAZIO", JOptionPane.WARNING_MESSAGE
+                );
+            } else {
+                String radio = rbIngles.isSelected() ? rbIngles.getText() : rbPortugues.getText();
+                
+                if(!(rbIngles.isSelected() || rbPortugues.isSelected())) {
+                    JOptionPane.showMessageDialog(
+                        this, "Por favor, marque uma das opções (Inglês ou Português).", "CAMPO DESMARCADO", JOptionPane.WARNING_MESSAGE
+                    );
+                } else {
+                    if(radio.equals("Inglês")) {
+                        lblTraduzido.setText(new Tradutor(dicionario).traduzirParaIngles(txtPalavra.getText()));
+                    } else {
+                        lblTraduzido.setText(new Tradutor(dicionario).traduzirParaPortugues(txtPalavra.getText()));
+                    }
+                }
+            }
+        });
     }
 
     

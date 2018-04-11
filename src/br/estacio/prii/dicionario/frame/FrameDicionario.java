@@ -64,7 +64,7 @@ public class FrameDicionario extends JFrame
     {   
         setSize(650, 555);
         setIconImage(new ImageIcon(getClass().getResource("/icones/translate.png")).getImage());
-        setTitle("Estácio 2018: Dicionário Inglês - Português");
+        setTitle("Estácio - 2018 : Dicionário Inglês - Português");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);

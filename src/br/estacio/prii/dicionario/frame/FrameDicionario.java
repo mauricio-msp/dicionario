@@ -152,18 +152,18 @@ public class FrameDicionario extends JFrame
         pnlTraducao.add(pnlTraduzido);
         
         // Painel Cadastro :Adicionados
-//        pnlCadastro.add(lblOperacao);
-//        pnlCadastro.add(cbbOperacao);
-//        pnlCadastro.add(lblPalavra);
-//        pnlCadastro.add(txtPalavra);
-//        pnlCadastro.add(lblTraducao);
-//        pnlCadastro.add(txtTraducao);
-//        pnlCadastro.add(new JLabel());
-//        pnlCadastro.add(btnCadastrar);
+        pnlCadastro.add(lblOperacao);
+        pnlCadastro.add(cbbOperacao);
+        pnlCadastro.add(lblPalavra);
+        pnlCadastro.add(txtPalavra);
+        pnlCadastro.add(lblTraducao);
+        pnlCadastro.add(txtTraducao);
+        pnlCadastro.add(new JLabel());
+        pnlCadastro.add(btnCadastrar);
         
         // Painel Central :Adicionados
         pnlCentral.add(pnlLista);
-        pnlCentral.add(pnlTraducao);
+        pnlCentral.add(pnlCadastro);
         
         // Painel de Botões de tradução :Adicionados
         btnGroup.add(rbIngles);

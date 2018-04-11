@@ -23,6 +23,7 @@ public class FrameDicionario extends JFrame
     private final JMenuItem menuSair           = new JMenuItem("Sair");
     private final JMenuItem menuSalvar         = new JMenuItem("Salvar");
     private final JMenuItem menuCarregar       = new JMenuItem("Carregar");
+    private final JMenuItem menuLimpar         = new JMenuItem("Limpar");
     private final JMenuItem menuCadastrar      = new JMenuItem("Cadastrar");
     private final JMenuItem menuTraduzir       = new JMenuItem("Traduzir");
     private final JLabel lblTitulo             = new JLabel(":: Dicionário Inglês-Português ::");
@@ -81,6 +82,7 @@ public class FrameDicionario extends JFrame
         menuSair.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_MASK));
         menuSalvar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_MASK));
         menuCarregar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.ALT_MASK));
+        menuLimpar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.ALT_MASK));
         menuCadastrar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_MASK));
         menuTraduzir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.ALT_MASK));
                
@@ -89,6 +91,7 @@ public class FrameDicionario extends JFrame
         menuSair.setIcon(new ImageIcon(getClass().getResource("/icones/door_out.png")));
         menuSalvar.setIcon(new ImageIcon(getClass().getResource("/icones/save.png")));
         menuCarregar.setIcon(new ImageIcon(getClass().getResource("/icones/open.png")));
+        menuLimpar.setIcon(new ImageIcon(getClass().getResource("/icones/edit.png")));
         menuCadastrar.setIcon(new ImageIcon(getClass().getResource("/icones/add.png")));
         menuTraduzir.setIcon(new ImageIcon(getClass().getResource("/icones/refresh.png")));
         
@@ -154,6 +157,7 @@ public class FrameDicionario extends JFrame
         menuArquivo.add(menuSair);
         menuDicionario.add(menuSalvar);
         menuDicionario.add(menuCarregar);
+        menuDicionario.add(menuLimpar);
         menuOperacao.add(menuCadastrar);
         menuOperacao.add(menuTraduzir);
 
@@ -225,7 +229,6 @@ public class FrameDicionario extends JFrame
         });
         
         menuSair.addActionListener((ActionEvent ae) -> {
-            
             String[] options = {"Sim", "Não"};
             int resposta =  JOptionPane.showOptionDialog(
                                 null,
@@ -242,17 +245,11 @@ public class FrameDicionario extends JFrame
         });   
         
         menuSalvar.addActionListener((ActionEvent ae) -> {
-            if(!modelLista.isEmpty()) {
-                new Arquivo().gravar(palavras);
-                
-                JOptionPane.showMessageDialog(
-                    this, "Dicionário salvo com sucesso!", "DICIONÁRIO SALVO", JOptionPane.QUESTION_MESSAGE
-                );
-            } else {
-                JOptionPane.showMessageDialog(
-                    this, "Não existem palavras na lista.", "LISTA VAZIA", JOptionPane.WARNING_MESSAGE
-                );
-            }
+            new Arquivo().gravar(palavras);
+
+            JOptionPane.showMessageDialog(
+                this, "Dicionário salvo com sucesso!", "DICIONÁRIO SALVO", JOptionPane.QUESTION_MESSAGE
+            );
         });   
         
         menuCarregar.addActionListener((ActionEvent ae) -> {
@@ -270,14 +267,26 @@ public class FrameDicionario extends JFrame
             lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
         });   
         
+        menuLimpar.addActionListener((ActionEvent ae) -> {
+            modelLista.clear();
+            palavras.clear();
+            
+            // Label Funcional
+            lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
+        });
+        
         menuCadastrar.addActionListener((ActionEvent ae) -> {
             pnlCadastro.setVisible(true);
             pnlTraducao.setVisible(false);
+            
+            cbxOperacaoC.setSelectedIndex(0);
         });
         
         menuTraduzir.addActionListener((ActionEvent ae) -> {
             pnlCadastro.setVisible(false);
             pnlTraducao.setVisible(true);
+            
+            cbxOperacaoT.setSelectedIndex(1);
         });
         
         // Eventos do ComboBox

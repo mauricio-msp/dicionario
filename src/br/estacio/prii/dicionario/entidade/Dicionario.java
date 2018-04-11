@@ -7,15 +7,10 @@ public class Dicionario
 {
     private ArrayList<Palavra> palavras;
 
-    //Construtores    
+    //Construtor    
     public Dicionario() 
     {
         palavras = new ArrayList<>();
-    }
-    
-    public Dicionario(ArrayList<Palavra> palavras) 
-    {
-        this.palavras = palavras;
     }
     
     //Métodos da Classe: Dicionário

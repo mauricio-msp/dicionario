@@ -26,17 +26,22 @@ public class FrameDicionario extends JFrame
     private final JMenuItem menuCadastrar      = new JMenuItem("Cadastrar");
     private final JMenuItem menuTraduzir       = new JMenuItem("Traduzir");
     private final JLabel lblTitulo             = new JLabel(":: Dicionário Inglês-Português ::");
-    private final JLabel lblOperacao           = new JLabel("Operação: ");
-    private final JLabel lblPalavra            = new JLabel("Palavra: ");
-    private final JLabel lblTraducao           = new JLabel("Tradução: ");
-    private final JLabel lblTradzirPara        = new JLabel("Traduzir para: ");
-    private final JLabel lblTraduzido          = new JLabel("");
+    private final JLabel lblOperacaoC          = new JLabel("Operação: ");
+    private final JLabel lblPalavraC           = new JLabel("Palavra: ");
+    private final JLabel lblTraducaoC          = new JLabel("Tradução: ");
+    private final JLabel lblOperacaoT          = new JLabel("Operação: ");
+    private final JLabel lblPalavraT           = new JLabel("Palavra: ");
+    private final JLabel lblTraducaoT          = new JLabel("Tradução: ");
+    private final JLabel lblTraduzirParaT      = new JLabel("Traduzir para: ");
+    private final JLabel lblTraduzidoT         = new JLabel("");
     private final JLabel lblRodape             = new JLabel("Total de Palavras: 0");
-    private final JComboBox cbbOperacao        = new JComboBox(opcoes);
-    private final JTextField txtPalavra        = new JTextField(10);
-    private final JTextField txtTraducao       = new JTextField(10);
-    private final JRadioButton rbIngles        = new JRadioButton("Inglês");
-    private final JRadioButton rbPortugues     = new JRadioButton("Português");
+    private final JComboBox cbxOperacaoC       = new JComboBox(opcoes);
+    private final JComboBox cbxOperacaoT       = new JComboBox(opcoes);
+    private final JTextField txtPalavraC       = new JTextField(22);
+    private final JTextField txtPalavraT       = new JTextField(22);
+    private final JTextField txtTraducaoC      = new JTextField(22);
+    private final JRadioButton rbInglesT       = new JRadioButton("Inglês");
+    private final JRadioButton rbPortuguesT    = new JRadioButton("Português");
     private final ButtonGroup btnGroup         = new ButtonGroup();
     private final DefaultListModel modelLista  = new DefaultListModel();
     private final JList listPalavras           = new JList(modelLista);
@@ -53,7 +58,6 @@ public class FrameDicionario extends JFrame
     private final JButton btnTraduzir          = new JButton("Traduzir");
     private final JSeparator separadorTitulo   = new JSeparator();
     private final JSeparator separadorRodape   = new JSeparator();
-    private final JSeparator separadorBotao    = new JSeparator();
          
     public FrameDicionario ()
     {   
@@ -88,23 +92,12 @@ public class FrameDicionario extends JFrame
         menuCadastrar.setIcon(new ImageIcon(getClass().getResource("/icones/add.png")));
         menuTraduzir.setIcon(new ImageIcon(getClass().getResource("/icones/refresh.png")));
         
-        // Labels :Propriedades
-        lblTraduzido.setForeground(new Color(30, 144, 255));
-        lblTitulo.setFont(new Font("Comic Sans", Font.BOLD, 25));
-        lblRodape.setFont(new Font("Comic Sans", Font.BOLD, 16));
-        lblTitulo.setForeground(new Color(30, 144, 255));
-        
-        // Botões :Icones
-        btnCadastrar.setIcon(new ImageIcon(getClass().getResource("/icones/add.png")));
-        btnExcluir.setIcon(new ImageIcon(getClass().getResource("/icones/delete.png")));
-        btnTraduzir.setIcon(new ImageIcon(getClass().getResource("/icones/refresh.png")));
-        
         // Paineis :Layouts
-        pnlCentral.setLayout(new GridLayout(1, 2, 20, 0));
+        pnlCentral.setLayout(new BorderLayout(10, 0));
         pnlCadastro.setLayout(new GridLayout(8, 1, 0, 10));
         pnlCadastro.setBorder(BorderFactory.createCompoundBorder(new TitledBorder("Cadastro"), new EmptyBorder(10, 10, 10, 10)));
         pnlTraducao.setLayout(new GridLayout(8, 1, 0, 10));
-        pnlTraducao.setBorder(BorderFactory.createCompoundBorder(new TitledBorder("Traduzir"), new EmptyBorder(10, 10, 10, 10)));
+        pnlTraducao.setBorder(BorderFactory.createCompoundBorder(new TitledBorder("Tradução"), new EmptyBorder(10, 10, 10, 10)));
         pnlBotoes.setLayout(new GridLayout(1, 2, 20, 0));
         pnlTraduzido.setLayout(new FlowLayout(FlowLayout.LEFT));
         pnlLista.setLayout(new BorderLayout(0, 10));
@@ -117,7 +110,6 @@ public class FrameDicionario extends JFrame
         separadorRodape.setPreferredSize(new Dimension(610, 5));
 	separadorRodape.setForeground(new Color(184, 207, 229));
 	separadorRodape.setBackground(new Color(184, 207, 229));
-        separadorBotao.setPreferredSize(new Dimension(100, 5));
         
         // Lista, Scroll(Rolagem) e Botão de Exclusão :Propriedades
         listPalavras.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -127,6 +119,28 @@ public class FrameDicionario extends JFrame
         spnLista.setPreferredSize(new Dimension(250, 300));
         spnLista.setViewportView(listPalavras);
         btnExcluir.setPreferredSize(new Dimension(200, 34));
+        
+        // Labels :Propriedades
+        lblTraduzidoT.setForeground(new Color(30, 144, 255));
+        lblTitulo.setFont(new Font("Comic Sans", Font.BOLD, 25));
+        lblRodape.setFont(new Font("Comic Sans", Font.BOLD, 16));
+        lblTitulo.setForeground(new Color(30, 144, 255));
+        
+        // ComboBox :Propriedades
+        cbxOperacaoC.setMaximumRowCount(2);
+        cbxOperacaoT.setMaximumRowCount(2);
+        cbxOperacaoT.setSelectedIndex(1);
+        cbxOperacaoC.setSelectedIndex(0);
+        
+        // Botões :Icones
+        btnCadastrar.setIcon(new ImageIcon(getClass().getResource("/icones/add.png")));
+        btnExcluir.setIcon(new ImageIcon(getClass().getResource("/icones/delete.png")));
+        btnTraduzir.setIcon(new ImageIcon(getClass().getResource("/icones/refresh.png")));
+        
+        // Campos :Propriedade
+        txtPalavraC.setToolTipText("Informe a palavra no idioma inglês.");
+        txtPalavraT.setToolTipText("Informe a palavra a ser traduzida.");
+        txtTraducaoC.setToolTipText("Informe a tradução da palavra no idioma português.");
         
         // Menu, Itens :Adicionados
         setJMenuBar(menuBar);
@@ -146,38 +160,41 @@ public class FrameDicionario extends JFrame
         pnlLista.repaint();
         
         // Painel Traduzido (Resultado)
-        pnlTraduzido.add(lblTraducao);
-        pnlTraduzido.add(lblTraduzido);
+        pnlTraduzido.add(lblTraducaoT);
+        pnlTraduzido.add(lblTraduzidoT);
          
         // Painel Tradução :Adicionados
-        pnlTraducao.add(lblOperacao);
-        pnlTraducao.add(cbbOperacao);
-        pnlTraducao.add(lblPalavra);
-        pnlTraducao.add(txtPalavra);
-        pnlTraducao.add(lblTradzirPara);
+        pnlTraducao.add(lblOperacaoT);
+        pnlTraducao.add(cbxOperacaoT);
+        pnlTraducao.add(lblPalavraT);
+        pnlTraducao.add(txtPalavraT);
+        pnlTraducao.add(lblTraduzirParaT);
         pnlTraducao.add(pnlBotoes);
         pnlTraducao.add(btnTraduzir);
         pnlTraducao.add(pnlTraduzido);
         
+        pnlTraducao.setVisible(false);
+        
         // Painel Cadastro :Adicionados
-        pnlCadastro.add(lblOperacao);
-        pnlCadastro.add(cbbOperacao);
-        pnlCadastro.add(lblPalavra);
-        pnlCadastro.add(txtPalavra);
-        pnlCadastro.add(lblTraducao);
-        pnlCadastro.add(txtTraducao);
+        pnlCadastro.add(lblOperacaoC);
+        pnlCadastro.add(cbxOperacaoC);
+        pnlCadastro.add(lblPalavraC);
+        pnlCadastro.add(txtPalavraC);
+        pnlCadastro.add(lblTraducaoC);
+        pnlCadastro.add(txtTraducaoC);
         pnlCadastro.add(new JLabel());
         pnlCadastro.add(btnCadastrar);
         
         // Painel Central :Adicionados
-        pnlCentral.add(pnlLista);
-        pnlCentral.add(pnlCadastro);
+        pnlCentral.add(pnlLista, "West");
+        pnlCentral.add(pnlCadastro, "East");
+        pnlCentral.add(pnlTraducao);
         
         // Painel de Botões de tradução :Adicionados
-        btnGroup.add(rbIngles);
-        btnGroup.add(rbPortugues);
-        pnlBotoes.add(rbIngles);
-        pnlBotoes.add(rbPortugues);
+        btnGroup.add(rbInglesT);
+        btnGroup.add(rbPortuguesT);
+        pnlBotoes.add(rbInglesT);
+        pnlBotoes.add(rbPortuguesT);
         
         // Painel Principal :Adicionados
         pnlPrincipal.add(lblTitulo, "North");
@@ -192,6 +209,18 @@ public class FrameDicionario extends JFrame
     private void initEvents()
     {
         // Eventos do Menu
+        menuSobre.addActionListener((ActionEvent ae) -> {
+            JOptionPane.showMessageDialog(
+                this, 
+                "Desenvolvido por:\n\n" +
+                "Claudia Mendes Fabris\n"+
+                "Dhonata Freitas Holanda\n" +
+                "Maurício de Souza Porfírio", 
+                "SOBRE NÓS", 
+                JOptionPane.INFORMATION_MESSAGE
+            );
+        });
+        
         menuSair.addActionListener((ActionEvent ae) -> {
             
             String[] options = {"Sim", "Não"};
@@ -234,14 +263,55 @@ public class FrameDicionario extends JFrame
             lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
         });   
         
+        menuCadastrar.addActionListener((ActionEvent ae) -> {
+            pnlCadastro.setVisible(true);
+            pnlTraducao.setVisible(false);
+        });
+        
+        menuTraduzir.addActionListener((ActionEvent ae) -> {
+            pnlCadastro.setVisible(false);
+            pnlTraducao.setVisible(true);
+        });
+        
+        // Eventos do ComboBox
+        cbxOperacaoC.addItemListener((ItemEvent ie) -> {
+            switch(cbxOperacaoC.getSelectedIndex()) {
+                case 0:
+                    pnlTraducao.setVisible(false);
+                    pnlCadastro.setVisible(true);
+                    break;
+                case 1:
+                    pnlTraducao.setVisible(true);
+                    pnlCadastro.setVisible(false);
+                    break;
+            } 
+            
+            cbxOperacaoT.setSelectedIndex(1);
+        });
+        
+        cbxOperacaoT.addItemListener((ItemEvent ie) -> {
+            switch(cbxOperacaoT.getSelectedIndex()) {
+                case 0:
+                    pnlTraducao.setVisible(false);
+                    pnlCadastro.setVisible(true);
+                    break;
+                case 1:
+                    pnlTraducao.setVisible(true);
+                    pnlCadastro.setVisible(false);
+                    break;
+            } 
+            
+            cbxOperacaoC.setSelectedIndex(0);
+        });
+        
         // Eventos dos Botões
         btnCadastrar.addActionListener((ActionEvent ae) -> {
-            if(txtPalavra.getText().isEmpty() || txtTraducao.getText().isEmpty()) {
+            if(txtPalavraC.getText().isEmpty() || txtTraducaoC.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(
                     this, "Por favor, preencha todos os campos.", "CAMPOS VAZIOS", JOptionPane.WARNING_MESSAGE
                 );
             } else {
-                dicionario.adicionar(txtTraducao.getText(), txtPalavra.getText());
+                dicionario.adicionar(txtTraducaoC.getText(), txtPalavraC.getText());
                 
                 palavras = dicionario.getPalavras();
         
@@ -258,8 +328,8 @@ public class FrameDicionario extends JFrame
                     }
                 });
                 
-                txtPalavra.setText("");
-                txtTraducao.setText(""); 
+                txtPalavraC.setText("");
+                txtTraducaoC.setText(""); 
                 
                 // Label Funcional
                 lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
@@ -269,12 +339,12 @@ public class FrameDicionario extends JFrame
         btnExcluir.addActionListener((ActionEvent ae) -> {
             if(listPalavras.getModel().getSize() == 0) {
                 JOptionPane.showMessageDialog(
-                    this, "Não existe nenhum item cadastrado.", "LISTA VAZIA", JOptionPane.WARNING_MESSAGE
+                    this, "Não existe nenhuma palavra cadastrada.", "LISTA VAZIA", JOptionPane.WARNING_MESSAGE
                 );  
             } else {
                 if(listPalavras.getSelectedValue() == null) {
                     JOptionPane.showMessageDialog(
-                        this, "Nenhum item foi selecionado.", "ITEM NÃO SELECIONADO", JOptionPane.WARNING_MESSAGE
+                        this, "Nenhuma palavra foi selecionado.", "PALAVRA NÃO SELECIONADO", JOptionPane.WARNING_MESSAGE
                     );
                 } else {
                     String[] options = {"Sim", "Não"};
@@ -301,22 +371,22 @@ public class FrameDicionario extends JFrame
         });
 
         btnTraduzir.addActionListener((ActionEvent ae) -> {
-            if(txtPalavra.getText().isEmpty()) {
+            if(txtPalavraT.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(
                     this, "Por favor, preencha o campo PALAVRA.", "CAMPO VAZIO", JOptionPane.WARNING_MESSAGE
                 );
             } else {
-                String radio = rbIngles.isSelected() ? rbIngles.getText() : rbPortugues.getText();
+                String radio = rbInglesT.isSelected() ? rbInglesT.getText() : rbPortuguesT.getText();
                 
-                if(!(rbIngles.isSelected() || rbPortugues.isSelected())) {
+                if(!(rbInglesT.isSelected() || rbPortuguesT.isSelected())) {
                     JOptionPane.showMessageDialog(
                         this, "Por favor, marque uma das opções (Inglês ou Português).", "CAMPO DESMARCADO", JOptionPane.WARNING_MESSAGE
                     );
                 } else {
                     if(radio.equals("Inglês")) {
-                        lblTraduzido.setText(new Tradutor(dicionario).traduzirParaIngles(txtPalavra.getText()));
+                        lblTraduzidoT.setText(new Tradutor(dicionario).traduzirParaIngles(txtPalavraT.getText()));
                     } else {
-                        lblTraduzido.setText(new Tradutor(dicionario).traduzirParaPortugues(txtPalavra.getText()));
+                        lblTraduzidoT.setText(new Tradutor(dicionario).traduzirParaPortugues(txtPalavraT.getText()));
                     }
                 }
             }

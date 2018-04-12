@@ -77,11 +77,53 @@ public class FrameDicionario extends JFrame
     
     private void initComponents()
     {
+        // Eventos da Janela
+        addWindowListener(new WindowAdapter() {
+            
+            @Override
+            public void windowClosing(WindowEvent we) 
+            {
+                String[] options = {"Sim", "Não"};
+                int resposta =  JOptionPane.showOptionDialog(
+                                    null,
+                                    "Você deseja realmente sair do dicionário?",
+                                    "CONFIRMAÇÃO DE SAÍDA",
+                                    JOptionPane.DEFAULT_OPTION,
+                                    JOptionPane.WARNING_MESSAGE,
+                                    null, options, options[0]
+                                );
+
+                if (resposta == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+
+            @Override
+            public void windowOpened(WindowEvent we) 
+            {
+                modelLista.clear();
+            
+                palavras = new Arquivo().ler();
+
+                palavras.forEach((Palavra p) -> {
+                    modelLista.addElement(p.getIngles() + " - " + p.getPortugues());
+                });
+
+                dicionario.setPalavras(palavras);
+
+                // Label Funcional
+                lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
+                
+                txtPalavraC.requestFocus();
+            }
+   
+        });
+        
         // Eventos de Atalho
         menuSobre.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.ALT_MASK));
         menuSair.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_MASK));
         menuSalvar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_MASK));
-        menuCarregar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.ALT_MASK));
+        menuCarregar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.ALT_MASK));
         menuLimpar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.ALT_MASK));
         menuCadastrar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_MASK));
         menuTraduzir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.ALT_MASK));

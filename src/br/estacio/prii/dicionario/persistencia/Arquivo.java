@@ -30,11 +30,11 @@ public class Arquivo
                         arquivo.write(str.toString());
                         arquivo.newLine();
                     }
+                    arquivo.close();
                 } else {
-                    new File("dicionario.txt").deleteOnExit();
+                    arquivo.close();
+                    new File("dicionario.txt").delete();
                 }
-                
-                arquivo.close();
             }
             
         }catch(IOException ioe){

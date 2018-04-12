@@ -76,49 +76,7 @@ public class FrameDicionario extends JFrame
     }
     
     private void initComponents()
-    {
-        // Eventos da Janela
-        addWindowListener(new WindowAdapter() {
-            
-            @Override
-            public void windowClosing(WindowEvent we) 
-            {
-                String[] options = {"Sim", "Não"};
-                int resposta =  JOptionPane.showOptionDialog(
-                                    null,
-                                    "Você deseja realmente sair do dicionário?",
-                                    "CONFIRMAÇÃO DE SAÍDA",
-                                    JOptionPane.DEFAULT_OPTION,
-                                    JOptionPane.WARNING_MESSAGE,
-                                    null, options, options[0]
-                                );
-
-                if (resposta == JOptionPane.YES_OPTION) {
-                    System.exit(0);
-                }
-            }
-
-            @Override
-            public void windowOpened(WindowEvent we) 
-            {
-                modelLista.clear();
-            
-                palavras = new Arquivo().ler();
-
-                palavras.forEach((Palavra p) -> {
-                    modelLista.addElement(p.getIngles() + " - " + p.getPortugues());
-                });
-
-                dicionario.setPalavras(palavras);
-
-                // Label Funcional
-                lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
-                
-                txtPalavraC.requestFocus();
-            }
-   
-        });
-        
+    {   
         // Eventos de Atalho
         menuSobre.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.ALT_MASK));
         menuSair.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_MASK));
@@ -257,6 +215,48 @@ public class FrameDicionario extends JFrame
     
     private void initEvents()
     {
+        // Eventos da Janela
+        addWindowListener(new WindowAdapter() {
+            
+            @Override
+            public void windowClosing(WindowEvent we) 
+            {
+                String[] options = {"Sim", "Não"};
+                int resposta =  JOptionPane.showOptionDialog(
+                                    null,
+                                    "Você deseja realmente sair do dicionário?",
+                                    "CONFIRMAÇÃO DE SAÍDA",
+                                    JOptionPane.DEFAULT_OPTION,
+                                    JOptionPane.WARNING_MESSAGE,
+                                    null, options, options[0]
+                                );
+
+                if (resposta == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+
+            @Override
+            public void windowOpened(WindowEvent we) 
+            {
+                modelLista.clear();
+            
+                palavras = new Arquivo().ler();
+
+                palavras.forEach((Palavra p) -> {
+                    modelLista.addElement(p.getIngles() + " - " + p.getPortugues());
+                });
+
+                dicionario.setPalavras(palavras);
+
+                // Label Funcional
+                lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
+                
+                txtPalavraC.requestFocus();
+            }
+   
+        });
+        
         // Eventos do Menu
         menuSobre.addActionListener((ActionEvent ae) -> {
             JOptionPane.showMessageDialog(
@@ -275,7 +275,7 @@ public class FrameDicionario extends JFrame
             int resposta =  JOptionPane.showOptionDialog(
                                 null,
                                 "Você deseja realmente sair do dicionário?",
-                                "Confirmação de Saída",
+                                "CONFIRMAÇÃO DE SAÍDA",
                                 JOptionPane.DEFAULT_OPTION,
                                 JOptionPane.WARNING_MESSAGE,
                                 null, options, options[0]
@@ -421,7 +421,7 @@ public class FrameDicionario extends JFrame
                     int resposta =  JOptionPane.showOptionDialog(
                                         null,
                                         "Você deseja realmente excluir essa palavra? ",
-                                        "Confirmação de Exclusão",
+                                        "CONFIRMAÇÃO DE EXCLUSÃO",
                                         JOptionPane.DEFAULT_OPTION,
                                         JOptionPane.WARNING_MESSAGE,
                                         null, options, options[0]

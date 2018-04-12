@@ -30,6 +30,7 @@ public class Arquivo
                         arquivo.write(str.toString());
                         arquivo.newLine();
                     }
+                    
                     arquivo.close();
                 } else {
                     arquivo.close();

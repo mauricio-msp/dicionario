@@ -8,14 +8,14 @@ public class Palavra
     private String portugues;
     private String ingles;
 
-    //Construtor
+    // Construtor
     public Palavra(String portugues, String ingles) 
     {
         this.setPortugues(portugues);
         this.setIngles(ingles);
     }
 
-    //Métodos Acessores e Modificadores
+    // Métodos Acessores e Modificadores
     public String getPortugues() 
     {
         return portugues;

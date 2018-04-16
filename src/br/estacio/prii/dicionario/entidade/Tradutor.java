@@ -5,13 +5,13 @@ public class Tradutor
 {
     private final Dicionario dicionario;
 
-    //Construtor
+    // Construtor
     public Tradutor(Dicionario dicionario) 
     {
         this.dicionario = dicionario;
     }
     
-    //Métodos da Classe: Tradutor
+    // Métodos da Classe: Tradutor
     public String traduzirParaIngles(String palavra)
     {
         Palavra p = dicionario.pesquisar(palavra);

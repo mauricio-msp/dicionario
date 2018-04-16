@@ -7,13 +7,13 @@ public class Dicionario
 {
     private ArrayList<Palavra> palavras;
 
-    //Construtor    
+    // Construtor    
     public Dicionario() 
     {
         palavras = new ArrayList<>();
     }
     
-    //Métodos da Classe: Dicionário
+    // Métodos da Classe: Dicionário
     public void adicionar(String portugues, String ingles)
     {
         palavras.add(new Palavra(portugues, ingles));
@@ -41,7 +41,7 @@ public class Dicionario
         return null;
     }
     
-    // Métodos Acessore e Modificadores
+    // Método Acessor e Modificador
     public void setPalavras(ArrayList<Palavra> palavras)
     {
         this.palavras = palavras;

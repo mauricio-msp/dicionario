@@ -1,8 +1,6 @@
 package br.estacio.prii.dicionario.entidade;
 
 
-import com.sun.xml.internal.ws.util.StringUtils;
-
 public class Palavra 
 {
     private String portugues;
@@ -23,7 +21,7 @@ public class Palavra
    
     public void setPortugues(String portugues) 
     {
-        this.portugues = StringUtils.capitalize(portugues);
+        this.portugues = portugues.substring(0, 1).toUpperCase().concat(portugues.substring(1));
     }
     
     public String getIngles() 
@@ -33,7 +31,7 @@ public class Palavra
     
     public void setIngles(String ingles) 
     {
-        this.ingles = StringUtils.capitalize(ingles);
+        this.ingles = ingles.substring(0, 1).toUpperCase().concat(ingles.substring(1));
     }  
     
 }

@@ -49,11 +49,10 @@ import br.estacio.prii.dicionario.dao.DicionarioDAO;
 
 public class FrameDicionario extends JFrame
 {   
-    
-    private Dicionario dicionario              = new Dicionario();
     private ArrayList<Palavra> palavras        = null;
-    private final String[] opcoes              = {"Cadastrar", "Traduzir"};
+    private Dicionario dicionario              = new Dicionario();
     private final DicionarioDAO dao            = new DicionarioDAO();
+    private final String opcoes[]              = {"Cadastrar", "Traduzir"};
     
     private final JMenuBar menuBar             = new JMenuBar();
     private final JMenu menuArquivo            = new JMenu("Arquivo");
@@ -103,7 +102,7 @@ public class FrameDicionario extends JFrame
     // Construtor
     public FrameDicionario ()
     {   
-        setSize(650, 555);
+        setSize(650, 565);
         setIconImage(new ImageIcon(getClass().getResource("/icones/translate.png")).getImage());
         setTitle("Estácio - 2018 : Dicionário Inglês - Português");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -262,10 +261,10 @@ public class FrameDicionario extends JFrame
             @Override
             public void windowClosing(WindowEvent we) 
             {
-                String[] options = {"Sim", "Não"};
+                String opcoes[] = {"Sim", "Não"};
         
                 int resposta =  JOptionPane.showOptionDialog(
-                                    null, "Você deseja realmente sair do dicionário?", "CONFIRMAÇÃO DE SAÍDA", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]
+                                    null, "Você deseja realmente sair do dicionário?", "CONFIRMAÇÃO DE SAÍDA", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, opcoes, opcoes[0]
                                 );
 
                 if (resposta == JOptionPane.YES_OPTION) {
@@ -302,10 +301,10 @@ public class FrameDicionario extends JFrame
         });
         
         menuSair.addActionListener((ActionEvent ae) -> {
-            String[] options = {"Sim", "Não"};
+            String opcoes[] = {"Sim", "Não"};
         
             int resposta =  JOptionPane.showOptionDialog(
-                                null, "Você deseja realmente sair do dicionário?", "CONFIRMAÇÃO DE SAÍDA", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]
+                                null, "Você deseja realmente sair do dicionário?", "CONFIRMAÇÃO DE SAÍDA", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, opcoes, opcoes[0]
                             );
 
             if (resposta == JOptionPane.YES_OPTION) {
@@ -444,10 +443,10 @@ public class FrameDicionario extends JFrame
                         this, "Nenhuma palavra foi selecionado.", "PALAVRA NÃO SELECIONADO", JOptionPane.WARNING_MESSAGE
                     );
                 } else {
-                    String[] options = {"Sim", "Não"};
+                    String opcoes[] = {"Sim", "Não"};
                     
                     int resposta =  JOptionPane.showOptionDialog(
-                                        null, "Você deseja realmente excluir essa palavra? ", "CONFIRMAÇÃO DE EXCLUSÃO", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]
+                                        null, "Você deseja realmente excluir essa palavra? ", "CONFIRMAÇÃO DE EXCLUSÃO", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, opcoes, opcoes[0]
                                     );
 
                     if (resposta == JOptionPane.YES_OPTION) {

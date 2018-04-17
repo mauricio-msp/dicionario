@@ -17,13 +17,16 @@ public class DicionarioDAO
 {
     private Dicionario dicionario = new Dicionario();
     
-    //Métodos da Classe: DicionarioDAO
-    public boolean gravar(Dicionario dicionario )
+    // Métodos da Classe: DicionarioDAO
+    public boolean gravar(Dicionario dicionario)
     {
         setDicionario(dicionario);
+     
+        // Criando diretório no disco C:
+        new File("C:\\Dict").mkdir();
         
         try{
-            try (BufferedWriter arquivo = new BufferedWriter(new FileWriter(new File("dicionario.txt")))) {
+            try (BufferedWriter arquivo = new BufferedWriter(new FileWriter("C:\\Dict\\dicionario.txt"))) {
                 StringBuilder str = new StringBuilder();
                 
                 if(dicionario.getPalavras().size() > 0){
@@ -39,7 +42,7 @@ public class DicionarioDAO
                     arquivo.close();     
                 } else {
                     arquivo.close();
-                    new File("dicionario.txt").delete();
+                    new File("C:\\Dict\\dicionario.txt").delete();
                 }
             }
             
@@ -54,7 +57,7 @@ public class DicionarioDAO
         ArrayList<Palavra> palavras = new ArrayList<>();
         
         try{
-            try (BufferedReader arquivo = new BufferedReader(new FileReader(new File("dicionario.txt")))) {
+            try (BufferedReader arquivo = new BufferedReader(new FileReader(new File("C:\\Dict\\dicionario.txt")))) {
                 String palavra[], str;
                 str = arquivo.readLine();
                 
@@ -68,13 +71,13 @@ public class DicionarioDAO
             }
             
             dicionario.setPalavras(palavras);
-        
         }catch(IOException ioe){
             //
         }
         
     }
     
+    // Método Acessor e Modificador
     public Dicionario getDicionario()
     {
         return dicionario;

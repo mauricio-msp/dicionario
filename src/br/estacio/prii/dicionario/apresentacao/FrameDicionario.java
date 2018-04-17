@@ -49,9 +49,11 @@ import br.estacio.prii.dicionario.dao.DicionarioDAO;
 
 public class FrameDicionario extends JFrame
 {   
-    private final Dicionario dicionario        = new Dicionario();
+    
+    private Dicionario dicionario              = new Dicionario();
     private ArrayList<Palavra> palavras        = null;
     private final String[] opcoes              = {"Cadastrar", "Traduzir"};
+    private final DicionarioDAO dao            = new DicionarioDAO();
     
     private final JMenuBar menuBar             = new JMenuBar();
     private final JMenu menuArquivo            = new JMenu("Arquivo");
@@ -275,8 +277,11 @@ public class FrameDicionario extends JFrame
             public void windowOpened(WindowEvent we) 
             {
                 modelLista.clear();
-            
-                palavras = new DicionarioDAO(dicionario).ler();
+                
+                dao.ler();
+                
+                dicionario = dao.getDicionario();
+                palavras   = dicionario.getPalavras();
                 
                 palavras.forEach((Palavra palavra) -> {
                     modelLista.addElement(palavra.getIngles() + " - " + palavra.getPortugues());
@@ -309,17 +314,25 @@ public class FrameDicionario extends JFrame
         });   
         
         menuSalvar.addActionListener((ActionEvent ae) -> {
-            new DicionarioDAO(dicionario).gravar();
-
-            JOptionPane.showMessageDialog(
-                this, "Dicionário salvo com sucesso!", "DICIONÁRIO SALVO", JOptionPane.QUESTION_MESSAGE
-            );
+            
+            if(dao.gravar(dicionario)){
+                JOptionPane.showMessageDialog(
+                    this, "Dicionário salvo com sucesso!", "DICIONÁRIO SALVO", JOptionPane.QUESTION_MESSAGE
+                );
+            } else {
+                JOptionPane.showMessageDialog(
+                    this, "Houve um erro com o salvamento!", "ERRO AO SALVAR", JOptionPane.ERROR_MESSAGE
+                );
+            }            
         });   
         
         menuCarregar.addActionListener((ActionEvent ae) -> {
             modelLista.clear();
             
-            palavras = new DicionarioDAO(dicionario).ler();
+            dao.ler();
+            
+            dicionario = dao.getDicionario();
+            palavras   = dicionario.getPalavras();
 
             palavras.forEach((Palavra palavra) -> {
                 modelLista.addElement(palavra.getIngles() + " - " + palavra.getPortugues());

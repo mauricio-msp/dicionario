@@ -15,16 +15,12 @@ import br.estacio.prii.dicionario.entidade.Dicionario;
 
 public class DicionarioDAO 
 {
-    private final Dicionario dicionario;
-    
-    public DicionarioDAO(Dicionario dicionario) 
-    {
-        this.dicionario = dicionario;
-    }
+    private Dicionario dicionario = new Dicionario();
     
     //Métodos da Classe: DicionarioDAO
-    public void gravar()
+    public boolean gravar(Dicionario dicionario )
     {
+        setDicionario(dicionario);
         
         try{
             try (BufferedWriter arquivo = new BufferedWriter(new FileWriter(new File("dicionario.txt")))) {
@@ -40,19 +36,20 @@ public class DicionarioDAO
                         arquivo.newLine();
                     }
                     
-                    arquivo.close();
+                    arquivo.close();     
                 } else {
                     arquivo.close();
                     new File("dicionario.txt").delete();
                 }
             }
             
+            return true;
         }catch(IOException ioe){
-            //
+            return false;
         }
     }
     
-    public ArrayList<Palavra> ler()
+    public void ler()
     {
         ArrayList<Palavra> palavras = new ArrayList<>();
         
@@ -70,11 +67,22 @@ public class DicionarioDAO
                 arquivo.close();
             }
             
+            dicionario.setPalavras(palavras);
+        
         }catch(IOException ioe){
             //
         }
         
-        return palavras;
+    }
+    
+    public Dicionario getDicionario()
+    {
+        return dicionario;
+    }
+    
+    private void setDicionario(Dicionario dicionario)
+    {
+        this.dicionario = dicionario;
     }
     
 }

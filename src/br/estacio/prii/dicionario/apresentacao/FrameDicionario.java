@@ -1,13 +1,45 @@
 package br.estacio.prii.dicionario.apresentacao;
 
 
-import java.awt.*;
-import java.awt.event.*;
-
-import javax.swing.*;
-import javax.swing.border.*;
-
 import java.util.ArrayList;
+
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.BorderLayout;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+
+import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.KeyStroke;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.JScrollPane;
+import javax.swing.JOptionPane;
+import javax.swing.ButtonGroup;
+import javax.swing.JRadioButton;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
+import javax.swing.ListSelectionModel;
+
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 
 import br.estacio.prii.dicionario.entidade.Palavra;
 import br.estacio.prii.dicionario.entidade.Tradutor;
@@ -244,18 +276,15 @@ public class FrameDicionario extends JFrame
             {
                 modelLista.clear();
             
-                palavras = new DicionarioDAO().ler();
-
-                palavras.forEach((Palavra p) -> {
-                    modelLista.addElement(p.getIngles() + " - " + p.getPortugues());
+                palavras = new DicionarioDAO(dicionario).ler();
+                
+                palavras.forEach((Palavra palavra) -> {
+                    modelLista.addElement(palavra.getIngles() + " - " + palavra.getPortugues());
                 });
-
+                
                 dicionario.setPalavras(palavras);
 
-                // Label Funcional
                 lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
-
-                txtPalavraC.requestFocus();
             }
    
         });
@@ -263,13 +292,7 @@ public class FrameDicionario extends JFrame
         // Eventos do Menu
         menuSobre.addActionListener((ActionEvent ae) -> {
             JOptionPane.showMessageDialog(
-                this, 
-                "Desenvolvido por:\n\n" +
-                "Claudia Mendes Fabris\n"+
-                "Dhonata Freitas Holanda\n" +
-                "Maurício de Souza Porfírio", 
-                "SOBRE NÓS", 
-                JOptionPane.INFORMATION_MESSAGE
+                this, "Desenvolvido por:\n\nClaudia Mendes Fabris\nDhonata Freitas Holanda\nMaurício de Souza Porfírio", "SOBRE NÓS", JOptionPane.INFORMATION_MESSAGE
             );
         });
         
@@ -286,7 +309,7 @@ public class FrameDicionario extends JFrame
         });   
         
         menuSalvar.addActionListener((ActionEvent ae) -> {
-            new DicionarioDAO().gravar(palavras);
+            new DicionarioDAO(dicionario).gravar();
 
             JOptionPane.showMessageDialog(
                 this, "Dicionário salvo com sucesso!", "DICIONÁRIO SALVO", JOptionPane.QUESTION_MESSAGE
@@ -296,25 +319,21 @@ public class FrameDicionario extends JFrame
         menuCarregar.addActionListener((ActionEvent ae) -> {
             modelLista.clear();
             
-            palavras = new DicionarioDAO().ler();
+            palavras = new DicionarioDAO(dicionario).ler();
 
-            palavras.forEach((Palavra p) -> {
-                modelLista.addElement(p.getIngles() + " - " + p.getPortugues());
+            palavras.forEach((Palavra palavra) -> {
+                modelLista.addElement(palavra.getIngles() + " - " + palavra.getPortugues());
             });
 
             dicionario.setPalavras(palavras);
 
-            // Label Funcional
             lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
-
-            txtPalavraC.requestFocus();
         });   
         
         menuLimpar.addActionListener((ActionEvent ae) -> {
             modelLista.clear();
             palavras.clear();
             
-            // Label Funcional
             lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
         });
         
@@ -378,8 +397,8 @@ public class FrameDicionario extends JFrame
                 
                 palavras = dicionario.getPalavras();
         
-                palavras.forEach((Palavra p) -> {
-                    modelLista.addElement(p.getIngles() + " - " + p.getPortugues());
+                palavras.forEach((Palavra palavra) -> {
+                    modelLista.addElement(palavra.getIngles() + " - " + palavra.getPortugues());
 
                     // Verificar palavras iguais
                     for(int i = 0; i < modelLista.getSize(); i++) {
@@ -395,7 +414,6 @@ public class FrameDicionario extends JFrame
                 txtPalavraC.setText("");
                 txtTraducaoC.setText(""); 
                 
-                // Label Funcional
                 lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
             }
             
@@ -414,13 +432,9 @@ public class FrameDicionario extends JFrame
                     );
                 } else {
                     String[] options = {"Sim", "Não"};
+                    
                     int resposta =  JOptionPane.showOptionDialog(
-                                        null,
-                                        "Você deseja realmente excluir essa palavra? ",
-                                        "CONFIRMAÇÃO DE EXCLUSÃO",
-                                        JOptionPane.DEFAULT_OPTION,
-                                        JOptionPane.WARNING_MESSAGE,
-                                        null, options, options[0]
+                                        null, "Você deseja realmente excluir essa palavra? ", "CONFIRMAÇÃO DE EXCLUSÃO", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]
                                     );
 
                     if (resposta == JOptionPane.YES_OPTION) {
@@ -429,7 +443,6 @@ public class FrameDicionario extends JFrame
                         dicionario.remover(item);
                         modelLista.removeElement(item);
 
-                        // Label Funcional
                         lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
                     }   
                 }               
@@ -453,12 +466,6 @@ public class FrameDicionario extends JFrame
             
             txtPalavraT.requestFocus();
         });
-        
-    }
-
-    // Métodos de Otimização de Código
-    private void carregarArquivo()
-    {
         
     }
     

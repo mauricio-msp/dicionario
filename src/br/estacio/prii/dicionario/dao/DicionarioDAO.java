@@ -1,6 +1,8 @@
 package br.estacio.prii.dicionario.dao;
 
 
+import java.util.ArrayList;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -8,25 +10,32 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 
-import java.util.ArrayList;
 import br.estacio.prii.dicionario.entidade.Palavra;
+import br.estacio.prii.dicionario.entidade.Dicionario;
 
 public class DicionarioDAO 
 {
+    private final Dicionario dicionario;
+    
+    public DicionarioDAO(Dicionario dicionario) 
+    {
+        this.dicionario = dicionario;
+    }
     
     //Métodos da Classe: DicionarioDAO
-    public void gravar(ArrayList<Palavra> palavras)
+    public void gravar()
     {
+        
         try{
             try (BufferedWriter arquivo = new BufferedWriter(new FileWriter(new File("dicionario.txt")))) {
                 StringBuilder str = new StringBuilder();
                 
-                if(palavras.size() > 0){
-                    for(Palavra p : palavras){
+                if(dicionario.getPalavras().size() > 0){
+                    for(Palavra palavra : dicionario.getPalavras()){
                         str.setLength(0);
-                        str.append(p.getIngles());
+                        str.append(palavra.getIngles());
                         str.append(" - ");
-                        str.append(p.getPortugues());
+                        str.append(palavra.getPortugues());
                         arquivo.write(str.toString());
                         arquivo.newLine();
                     }

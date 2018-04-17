@@ -1,7 +1,5 @@
-package br.estacio.prii.dicionario.main;
+package br.estacio.prii.dicionario.apresentacao;
 
-
-import br.estacio.prii.dicionario.frame.*;
 
 public class DicionarioInglesPortugues 
 {

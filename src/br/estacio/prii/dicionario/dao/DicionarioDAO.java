@@ -1,4 +1,4 @@
-package br.estacio.prii.dicionario.persistencia;
+package br.estacio.prii.dicionario.dao;
 
 
 import java.io.File;
@@ -11,10 +11,10 @@ import java.io.BufferedWriter;
 import java.util.ArrayList;
 import br.estacio.prii.dicionario.entidade.Palavra;
 
-public class Arquivo 
+public class DicionarioDAO 
 {
     
-    //Métodos da Classe: Arquivo
+    //Métodos da Classe: DicionarioDAO
     public void gravar(ArrayList<Palavra> palavras)
     {
         try{

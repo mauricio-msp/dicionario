@@ -1,13 +1,19 @@
-package br.estacio.prii.dicionario.frame;
+package br.estacio.prii.dicionario.apresentacao;
 
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+
+import javax.swing.*;
 import javax.swing.border.*;
-import br.estacio.prii.dicionario.entidade.*;
-import br.estacio.prii.dicionario.persistencia.Arquivo;
+
 import java.util.ArrayList;
+
+import br.estacio.prii.dicionario.entidade.Palavra;
+import br.estacio.prii.dicionario.entidade.Tradutor;
+import br.estacio.prii.dicionario.entidade.Dicionario;
+
+import br.estacio.prii.dicionario.dao.DicionarioDAO;
 
 public class FrameDicionario extends JFrame
 {   
@@ -222,13 +228,34 @@ public class FrameDicionario extends JFrame
             @Override
             public void windowClosing(WindowEvent we) 
             {
-                confirmarSaida();
+                String[] options = {"Sim", "Não"};
+        
+                int resposta =  JOptionPane.showOptionDialog(
+                                    null, "Você deseja realmente sair do dicionário?", "CONFIRMAÇÃO DE SAÍDA", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]
+                                );
+
+                if (resposta == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
             }
 
             @Override
             public void windowOpened(WindowEvent we) 
             {
-                carregarArquivo();
+                modelLista.clear();
+            
+                palavras = new DicionarioDAO().ler();
+
+                palavras.forEach((Palavra p) -> {
+                    modelLista.addElement(p.getIngles() + " - " + p.getPortugues());
+                });
+
+                dicionario.setPalavras(palavras);
+
+                // Label Funcional
+                lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
+
+                txtPalavraC.requestFocus();
             }
    
         });
@@ -247,11 +274,19 @@ public class FrameDicionario extends JFrame
         });
         
         menuSair.addActionListener((ActionEvent ae) -> {
-            confirmarSaida();
+            String[] options = {"Sim", "Não"};
+        
+            int resposta =  JOptionPane.showOptionDialog(
+                                null, "Você deseja realmente sair do dicionário?", "CONFIRMAÇÃO DE SAÍDA", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]
+                            );
+
+            if (resposta == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }
         });   
         
         menuSalvar.addActionListener((ActionEvent ae) -> {
-            new Arquivo().gravar(palavras);
+            new DicionarioDAO().gravar(palavras);
 
             JOptionPane.showMessageDialog(
                 this, "Dicionário salvo com sucesso!", "DICIONÁRIO SALVO", JOptionPane.QUESTION_MESSAGE
@@ -259,7 +294,20 @@ public class FrameDicionario extends JFrame
         });   
         
         menuCarregar.addActionListener((ActionEvent ae) -> {
-            carregarArquivo();
+            modelLista.clear();
+            
+            palavras = new DicionarioDAO().ler();
+
+            palavras.forEach((Palavra p) -> {
+                modelLista.addElement(p.getIngles() + " - " + p.getPortugues());
+            });
+
+            dicionario.setPalavras(palavras);
+
+            // Label Funcional
+            lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
+
+            txtPalavraC.requestFocus();
         });   
         
         menuLimpar.addActionListener((ActionEvent ae) -> {
@@ -411,38 +459,7 @@ public class FrameDicionario extends JFrame
     // Métodos de Otimização de Código
     private void carregarArquivo()
     {
-        modelLista.clear();
-            
-        palavras = new Arquivo().ler();
-
-        palavras.forEach((Palavra p) -> {
-            modelLista.addElement(p.getIngles() + " - " + p.getPortugues());
-        });
-
-        dicionario.setPalavras(palavras);
-
-        // Label Funcional
-        lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
-
-        txtPalavraC.requestFocus();
-    }
-    
-    private void confirmarSaida()
-    {
-        String[] options = {"Sim", "Não"};
         
-        int resposta =  JOptionPane.showOptionDialog(
-                            null,
-                            "Você deseja realmente sair do dicionário?",
-                            "CONFIRMAÇÃO DE SAÍDA",
-                            JOptionPane.DEFAULT_OPTION,
-                            JOptionPane.WARNING_MESSAGE,
-                            null, options, options[0]
-                        );
-
-        if (resposta == JOptionPane.YES_OPTION) {
-            System.exit(0);
-        }
     }
     
 }

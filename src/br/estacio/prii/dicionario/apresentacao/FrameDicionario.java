@@ -405,7 +405,7 @@ public class FrameDicionario extends JFrame
                     this, "Por favor, preencha todos os campos.", "CAMPOS VAZIOS", JOptionPane.WARNING_MESSAGE
                 );
             } else {
-                dicionario.adicionar(txtTraducaoC.getText(), txtPalavraC.getText());
+                dicionario.adicionar(txtTraducaoC.getText().trim(), txtPalavraC.getText().trim());
                 
                 palavras = dicionario.getPalavras();
         

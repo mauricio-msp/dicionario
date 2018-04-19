@@ -268,26 +268,26 @@ public class FrameDicionario extends JFrame
                                 );
 
                 if (resposta == JOptionPane.YES_OPTION) {
-                    System.exit(0);
+                    System.exit(0); // Fechando aplicação
                 }
             }
 
             @Override
             public void windowOpened(WindowEvent we) 
             {
-                modelLista.clear();
+                modelLista.clear(); // Limpa a lista
                 
-                dao.ler();
+                dao.ler(); // Ler arquivo e preenche o ArrayList<Palavra>
                 
-                dicionario = dao.getDicionario();
-                palavras   = dicionario.getPalavras();
+                dicionario = dao.getDicionario(); // Retorna o dicionário preenchido
+                palavras   = dicionario.getPalavras(); // Retorna o ArrayList de palavras
                 
+                // Preenche a lista com as palavras montadas
                 palavras.forEach((Palavra palavra) -> {
-                    modelLista.addElement(palavra.getIngles() + " - " + palavra.getPortugues());
+                    modelLista.addElement(palavra.toString());
                 });
                 
-                dicionario.setPalavras(palavras);
-
+                // Mostra a quantidade de palavras na lista
                 lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
             }
    
@@ -308,7 +308,7 @@ public class FrameDicionario extends JFrame
                             );
 
             if (resposta == JOptionPane.YES_OPTION) {
-                System.exit(0);
+                System.exit(0); // Fechando aplicação
             }
         });   
         
@@ -326,76 +326,77 @@ public class FrameDicionario extends JFrame
         });   
         
         menuCarregar.addActionListener((ActionEvent ae) -> {
-            modelLista.clear();
-            
-            dao.ler();
-            
-            dicionario = dao.getDicionario();
-            palavras   = dicionario.getPalavras();
+            modelLista.clear(); // Limpa a lista
+                
+            dao.ler(); // Ler arquivo e preenche o ArrayList<Palavra>
 
+            dicionario = dao.getDicionario(); // Retorna o dicionário preenchido
+            palavras   = dicionario.getPalavras(); // Retorna o ArrayList de palavrass
+
+            // Preenche a lista com as palavras montadas
             palavras.forEach((Palavra palavra) -> {
-                modelLista.addElement(palavra.getIngles() + " - " + palavra.getPortugues());
+                modelLista.addElement(palavra.toString());
             });
 
-            dicionario.setPalavras(palavras);
-
+            // Mostra a quantidade de palavras na lista
             lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
         });   
         
         menuLimpar.addActionListener((ActionEvent ae) -> {
-            modelLista.clear();
-            palavras.clear();
+            modelLista.clear(); // Limpa a lista
+            palavras.clear(); // Limpa o ArrayList
             
+            // Mostra a quantidade de palavras na lista
             lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
         });
         
         menuCadastrar.addActionListener((ActionEvent ae) -> {
-            pnlCadastro.setVisible(true);
-            pnlTraducao.setVisible(false);
+            pnlCadastro.setVisible(true); // Painel visível
+            pnlTraducao.setVisible(false); // Painel oculto
             
-            txtPalavraC.requestFocus();
-            cbxOperacaoC.setSelectedIndex(0);
+            txtPalavraC.requestFocus(); // Foco no campo de cadastro da palavra
+            cbxOperacaoC.setSelectedIndex(0); // Altera o indíce do campo <ComboBox>
         });
         
         menuTraduzir.addActionListener((ActionEvent ae) -> {
-            pnlCadastro.setVisible(false);
-            pnlTraducao.setVisible(true);
+            pnlCadastro.setVisible(false); // Painel oculto
+            pnlTraducao.setVisible(true); // Painel visível
             
-            txtPalavraT.requestFocus();
-            cbxOperacaoT.setSelectedIndex(1);
+            txtPalavraT.requestFocus(); // Foco no campo de tradução da palavra
+            cbxOperacaoT.setSelectedIndex(1); // Altera o indíce do campo <ComboBox>
         });
         
         // Eventos do ComboBox
         cbxOperacaoC.addItemListener((ItemEvent ie) -> {
             if(cbxOperacaoC.getSelectedIndex() == 0) {
-                pnlTraducao.setVisible(false);
-                pnlCadastro.setVisible(true);
+                pnlTraducao.setVisible(false); // Painel oculto
+                pnlCadastro.setVisible(true); // Painel visível
 
                 txtPalavraC.requestFocus();
             } else {
-                pnlTraducao.setVisible(true);
-                pnlCadastro.setVisible(false);
+                pnlTraducao.setVisible(true); // Painel visível
+                pnlCadastro.setVisible(false); // Painel oculto
 
                 txtPalavraT.requestFocus();
             } 
             
-            cbxOperacaoT.setSelectedIndex(1);
+            cbxOperacaoT.setSelectedIndex(1); // Altera o indíce do campo <ComboBox>
         });
         
         cbxOperacaoT.addItemListener((ItemEvent ie) -> {
             if(cbxOperacaoT.getSelectedIndex() == 0) {
-                pnlTraducao.setVisible(false);
-                pnlCadastro.setVisible(true);
+                pnlTraducao.setVisible(false); // Painel oculto
+                pnlCadastro.setVisible(true); // Painel visível
 
-                txtPalavraC.requestFocus();
+                txtPalavraC.requestFocus(); // Foco no campo de cadastro da palavra
             } else {
-                pnlTraducao.setVisible(true);
-                pnlCadastro.setVisible(false);
+                pnlTraducao.setVisible(true); // Painel visível
+                pnlCadastro.setVisible(false); // Painel oculto
 
-                txtPalavraT.requestFocus();
+                txtPalavraT.requestFocus(); // Foco no campo de tradução da palavra
             } 
             
-            cbxOperacaoC.setSelectedIndex(0);
+            cbxOperacaoC.setSelectedIndex(0); // Altera o indíce do campo <ComboBox>
         });
         
         // Eventos dos Botões
@@ -405,31 +406,26 @@ public class FrameDicionario extends JFrame
                     this, "Por favor, preencha todos os campos.", "CAMPOS VAZIOS", JOptionPane.WARNING_MESSAGE
                 );
             } else {
-                dicionario.adicionar(txtTraducaoC.getText().trim(), txtPalavraC.getText().trim());
+                // Adiciona a palavra com tradução
+                dicionario.adicionar(new Palavra(txtTraducaoC.getText().trim(), txtPalavraC.getText().trim()));
                 
-                palavras = dicionario.getPalavras();
-        
+                modelLista.clear(); // Limpa a lista
+                
+                palavras = dicionario.getPalavras(); // Retorna o ArrayList de palavras
+                
+                // Preencha a lista com as palavras montadas
                 palavras.forEach((Palavra palavra) -> {
-                    modelLista.addElement(palavra.getIngles() + " - " + palavra.getPortugues());
-
-                    // Verificar palavras iguais
-                    for(int i = 0; i < modelLista.getSize(); i++) {
-                        for(int j = i + 1; j < modelLista.getSize(); j++) {
-                            if(modelLista.getElementAt(i).equals(modelLista.getElementAt(j)) ) {
-                                modelLista.removeElementAt(j);
-                                j--;
-                            }
-                        }
-                    }
+                    modelLista.addElement(palavra.toString());    
                 });
                 
-                txtPalavraC.setText("");
-                txtTraducaoC.setText(""); 
+                txtPalavraC.setText(""); // Limpa o campo palavra
+                txtTraducaoC.setText(""); // Limpa o campo tradução
                 
+                // Mostra a quantidade de palavras na lista
                 lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
             }
             
-            txtPalavraC.requestFocus();
+            txtPalavraC.requestFocus(); // Foco no campo de cadastro da palavra
         });
         
         btnExcluir.addActionListener((ActionEvent ae) -> {
@@ -450,11 +446,13 @@ public class FrameDicionario extends JFrame
                                     );
 
                     if (resposta == JOptionPane.YES_OPTION) {
-                        String item = String.valueOf(listPalavras.getSelectedValue());
+                        // Armazena a palavra selecionada da lista
+                        String palavra = String.valueOf(listPalavras.getSelectedValue());
 
-                        dicionario.remover(item);
-                        modelLista.removeElement(item);
+                        dicionario.remover(palavra); // Remove do dicionário
+                        modelLista.removeElement(palavra); // Remove da lista
 
+                        // Mostra a quantidade de palavras na lista
                         lblRodape.setText("Total de Palavras: " + Integer.toString(modelLista.getSize()));
                     }   
                 }               
@@ -467,16 +465,19 @@ public class FrameDicionario extends JFrame
                     this, "Por favor, preencha o campo PALAVRA.", "CAMPO VAZIO", JOptionPane.WARNING_MESSAGE
                 );
             } else {
+                // Verifica qual opção esta selecionada e retorna o texto
                 String radio = rbInglesT.isSelected() ? rbInglesT.getText() : rbPortuguesT.getText();
               
                 if(radio.equals("Inglês")) {
+                    // Traduz a palavra para o inglês
                     lblTraduzidoT.setText(new Tradutor(dicionario).traduzirParaIngles(txtPalavraT.getText()));
                 } else {
+                    // Traduz a palavra para o português
                     lblTraduzidoT.setText(new Tradutor(dicionario).traduzirParaPortugues(txtPalavraT.getText()));
                 }
             }
             
-            txtPalavraT.requestFocus();
+            txtPalavraT.requestFocus(); // Foco no campo de tradução da palavra
         });
         
     }

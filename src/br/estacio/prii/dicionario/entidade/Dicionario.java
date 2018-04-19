@@ -2,6 +2,7 @@ package br.estacio.prii.dicionario.entidade;
 
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class Dicionario
 {
@@ -14,18 +15,31 @@ public class Dicionario
     }
     
     // Métodos da Classe: Dicionário
-    public void adicionar(String portugues, String ingles)
+    public void adicionar(Palavra palavra)
     {
-        palavras.add(new Palavra(portugues, ingles));
-        removerDuplicados();
+        palavras.add(palavra);
+        boolean achou = false;
+        
+        for(int i = 0; i < palavras.size(); i++) {
+            if(palavras.get(i).toString().equalsIgnoreCase(palavra.toString())) {
+                if(achou) {
+                    JOptionPane.showMessageDialog(
+                        null, "Essa palavra já esta cadastrada!", "PALAVRA JÁ EXISTE", JOptionPane.ERROR_MESSAGE
+                    );
+
+                    palavras.remove(palavra);
+                }
+                
+                achou = true;
+            }
+        }
     }
     
     public void remover(String palavra)
     {
         for(int i = 0; i < palavras.size(); i++) {
-            if((palavras.get(i).getIngles() + " - " + palavras.get(i).getPortugues()).equalsIgnoreCase(palavra)) {
+            if((palavras.get(i).toString()).equalsIgnoreCase(palavra)) {
                 palavras.remove(i);
-                i--;
             }
         }
     }
@@ -52,18 +66,4 @@ public class Dicionario
         return palavras;
     }
     
-    // Método Privado da Classe: Dicionário
-    private void removerDuplicados() 
-    {
-        for (int i = 0; i < palavras.size(); i++) {
-            Palavra a = palavras.get(i);
-            for (int j = i + 1; j < palavras.size(); j++) {
-                Palavra b = palavras.get(j);
-                if (a.getIngles().equalsIgnoreCase(b.getIngles()) || a.getPortugues().equalsIgnoreCase(b.getPortugues())) {
-                    palavras.remove(j);
-                    j--;
-                }
-            }
-        }
-    }
 }

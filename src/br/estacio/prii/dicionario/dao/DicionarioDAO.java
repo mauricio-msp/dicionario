@@ -32,9 +32,7 @@ public class DicionarioDAO
                 if(dicionario.getPalavras().size() > 0){
                     for(Palavra palavra : dicionario.getPalavras()){
                         str.setLength(0);
-                        str.append(palavra.getIngles());
-                        str.append(" - ");
-                        str.append(palavra.getPortugues());
+                        str.append(palavra.toString());
                         arquivo.write(str.toString());
                         arquivo.newLine();
                     }

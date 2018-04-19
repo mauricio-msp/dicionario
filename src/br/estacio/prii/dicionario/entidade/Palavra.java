@@ -9,8 +9,8 @@ public class Palavra
     // Construtor
     public Palavra(String portugues, String ingles) 
     {
-        this.setPortugues(portugues);
-        this.setIngles(ingles);
+        setPortugues(portugues);
+        setIngles(ingles);
     }
 
     // Métodos Acessores e Modificadores
@@ -34,4 +34,9 @@ public class Palavra
         this.ingles = ingles.substring(0, 1).toUpperCase().concat(ingles.substring(1));
     }  
     
+    @Override
+    public String toString()
+    {
+        return getIngles() + " - " + getPortugues();
+    }
 }

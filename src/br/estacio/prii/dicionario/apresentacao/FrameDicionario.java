@@ -67,8 +67,8 @@ public class FrameDicionario extends JFrame
     private final JMenuItem menuTraduzir       = new JMenuItem("Traduzir");
     private final JLabel lblTitulo             = new JLabel(":: Dicionário Inglês-Português ::");
     private final JLabel lblOperacaoC          = new JLabel("Operação: ");
-    private final JLabel lblPalavraC           = new JLabel("Palavra: ");
-    private final JLabel lblTraducaoC          = new JLabel("Tradução: ");
+    private final JLabel lblPalavraC           = new JLabel("Palavra (Inglês): ");
+    private final JLabel lblTraducaoC          = new JLabel("Tradução (Português): ");
     private final JLabel lblOperacaoT          = new JLabel("Operação: ");
     private final JLabel lblPalavraT           = new JLabel("Palavra: ");
     private final JLabel lblTraducaoT          = new JLabel("Tradução: ");
@@ -296,7 +296,15 @@ public class FrameDicionario extends JFrame
         // Eventos do Menu
         menuSobre.addActionListener((ActionEvent ae) -> {
             JOptionPane.showMessageDialog(
-                this, "Desenvolvido por:\n\nClaudia Mendes Fabris\nDhonata Freitas Holanda\nMaurício de Souza Porfírio", "SOBRE NÓS", JOptionPane.INFORMATION_MESSAGE
+                this, "Projeto desenvolvido para fins acadêmicos, a partir da "
+                        + "\ndisciplina de Programação II, ministrada pelo docente"
+                        + "\nNewton Gomes no Centro Universitário Estácio do Ceará"
+                        + "\n- Unidade Moreira Campos, no período 2018.1.\n\n"
+                        + "Desenvolvido por:\n\nClaudia Mendes Fabris - 5º semestre"
+                        + "de SI\n"
+                        + "Dhonata Freitas Holanda - 5º semestre de SI\nMaurício "
+                        + "de Souza Porfírio - 5º semestre de SI", 
+                    "SOBRE NÓS", JOptionPane.INFORMATION_MESSAGE
             );
         });
         
